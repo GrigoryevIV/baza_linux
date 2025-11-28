@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>46. Межсетевой экран - firewalld — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/46/basis.gnulinux.pro/basis/46/46._%D0%9C%D0%B5%D0%B6%D1%81%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD_-_firewalld.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="../47/47._Пакетный_менеджер_-_dnf.html" rel="next" title="47. Пакетный менеджер - dnf"/>
+<link href="../45/45._Принудительный_контроль_доступа_-_SElinux.html" rel="prev" title="45. Принудительный контроль доступа - SElinux"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="46._Межсетевой_экран_-_firewalld.html#">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">46. Межсетевой экран - firewalld</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="firewalld">
+<h1>46. Межсетевой экран - firewalld<a class="headerlink" href="46._Межсетевой_экран_-_firewalld.html#firewalld" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/pIqwmxYQL-E" title="YouTube video player" width="560"></iframe>
+<p><img alt="" src="../../_images/sshd1.png"/></p>
+<p>В прошлый раз мы с вами разобрали SElinux - систему безопасности, защищаю от уязвимостей. Допустим, если у SSH демона есть какая-то недоработка, взломщики не логинясь через него попытаются запустить какую-то другую программу, например, passwd, чтобы задать пароль root пользователю и получить доступ на сервер. Это абстрактный пример, в реале атаки несколько другие, но суть похожая. Так вот, если в системе нет SElinux-а, злоумышленники получат полный доступ к системе, так как sshd работает от пользователя root:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">sshd</span>
+</pre></div>
+</div>
+<p>А если SElinux есть, то он не позволит процессу sshd запустить passwd или любую другую программу, так как контексты не позволяют, тем самым предотвратит атаку.</p>
+<p>Но надеяться только на него не стоит - хорошая система безопасности состоит из многих уровней. И одну из главных ролей играет файрвол, который позволяет контролировать соединения ещё до того, как они доберутся до демона. Ведь если злоумышленник не сможет подключиться к SSH - то и не сможет эксплуатировать уязвимости.</p>
+<p><img alt="" src="../../_images/netfilter.png"/></p>
+<p>Если помните, я говорил, что в ядре Linux есть фреймворк LSM, который является каркасом для SElinux и других подобных программ. Так вот, тут похожая ситуация - в ядре есть фреймворк netfilter, который является каркасом для различных инструментов по управлению файрволом. Самой блокировкой занимается именно netfilter, но он работает на уровне ядра, а чтобы задавать настройки нужны инструменты в пространстве пользователя. Раньше был популярен iptables, но в 2014 его заменил nftables, хотя до сих пор iptables где-то ещё используется. Но при этом сам nftables также выступает каркасом, есть утилита nft для создания политик для nftables, а он уже преобразует эти политики в понятный вид для netfilter. Но на RHEL-based дистрибутивах для управления nftables по умолчанию используется другой инструмент - firewalld. И о нём сегодня мы и будем говорить. Чтобы обобщить, firewalld - это инструмент для управления файрволом, использующий в качестве бэкенда nftables, который в свою очередь является инструментом для управления фреймворком ядра netfilter. Это так, в целях общего развития.</p>
+<p><img alt="" src="../../_images/firewalld.png"/></p>
+<p>При этом сам firewalld является демоном:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">firewalld</span>
+</pre></div>
+</div>
+<p>а для просмотра информации и управления используется команда <code class="docutils literal notranslate"><span class="pre">firewall-cmd</span></code>. В некоторых случаях может понадобится выключить файрвол, например, у вас что-то не работает и есть подозрения, что подключения блокирует файрвол. В таких случаях достаточно остановить этот сервис. Но просто так это делать не стоит.</p>
+<p><img alt="" src="../../_images/firewallcmd.png"/></p>
+<p>У firewall-cmd большой функционал, поэтому много различных ключей, и почти все начинаются на две дефиса. Но пусть это вас не пугает, потому что всё интуитивно понятно.</p>
+<p><img alt="" src="../../_images/listall.png"/></p>
+<p>Начнём с простого - list-all:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>Она показывает всю информацию - что разрешено, что запрещено и к кому это относится. Пока остановимся на строке services - здесь перечислены разрешённые сервисы - cockpit, dhcpv6-client и ssh. В firewalld, сервисы - это шаблоны, которые упрощают настройку и понимание. Смотришь и видишь, что ssh разрешён.</p>
+<p><img alt="" src="../../_images/firewalldservices.png"/></p>
+<p>Но настройки файрвола никак не связаны с настройками демонов. Если поменять стандартный порт демона, того же sshd - это не значит, что и на firewalld он изменится. Чтобы посмотреть информацию про сервис, можно использовать опцию <code class="docutils literal notranslate"><span class="pre">--info-service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">info</span><span class="o">-</span><span class="n">service</span><span class="o">=</span><span class="n">ssh</span>
+</pre></div>
+</div>
+<p>Как тут видно, ssh используется 22 порт tcp. Настройки сервисов файрвола прописаны в файлах в <code class="docutils literal notranslate"><span class="pre">/lib/firewalld/services</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">firewalld</span><span class="o">/</span><span class="n">services</span><span class="o">/</span><span class="n">ssh</span>
+</pre></div>
+</div>
+<p>В целом сервис отличается от порта - в одном сервисе может быть несколько портов, сервис можно жёстко привязать к определённым адресам, исходящим портам, другим сервисам и т.п.</p>
+<p><img alt="" src="../../_images/changeport.png"/></p>
+<p>Давайте, к примеру, на sshd поставим нестандартный порт:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">sshd</span>
+</pre></div>
+</div>
+<p>Хоть меня и не выбило из текущей сессии, но при попытке заново подключиться по стандартному порту ничего не получится. Но и указав изменённый порт также ничего не выходит. Потому что в файрволе не настроено, чтобы он кого-то пускал по порту 2233. Правда в логах об этом не будет ни слова - обычно, нет необходимости логировать каждое запрещённое соединение, а их, как правило, так много, что для логов не хватит места.</p>
+<p><img alt="" src="../../_images/addport.png"/></p>
+<p>Самый простой вариант - разрешить порт, add port:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">2233</span><span class="o">/</span><span class="n">tcp</span>
+</pre></div>
+</div>
+<p>Т.е. после знака равно нужно указать номер порта, слэш и нужный протокол - tcp или udp. После этого подключение прошло нормально:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">vbox</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2233</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/permanent.png"/></p>
+<p>Но эти изменения только на текущую сессию. Если перезагрузить компьютер или сервис файрвола, то опять подключения будут блокироваться:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">reload</span>
+<span class="n">ssh</span> <span class="n">vbox</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2233</span>
+</pre></div>
+</div>
+<p>Если мы хотим, чтобы изменения остались навсегда, нужно использовать ключ <code class="docutils literal notranslate"><span class="pre">--permanent</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">2233</span><span class="o">/</span><span class="n">tcp</span> <span class="o">--</span><span class="n">permanent</span>
+</pre></div>
+</div>
+<p>При этом изменения происходят в настройках, а не в текущей сессии, поэтому после команды следует перезапустить файрвол:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>После чего всё заработает:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">vbox</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2233</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/removeservice.png"/></p>
+<p>Правда сейчас сложилась ситуация, что у нас на файрволе открыт и 22 порт, как сервис, и 2233:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="n">services</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="n">ports</span>
+</pre></div>
+</div>
+<p>Существует заблуждение, что открытый порт - это опасно, но сам по себе порт не несёт никакой угрозы, она может быть в программе, которая стоит за этим портом, в её уязвимостях и неправильных настройках. И то что сейчас на файрволе остался открытым 22 порт - ничего страшного, всё равно за ним никакого сервиса нет. Однако всё равно стоит убирать лишнее и приводить в порядок - безопасность комплексная штука, а хаос только делает хуже. Поэтому уберём отсюда сервис dhcpv6-client - он нужен для ipv6, а мы им не пользуемся:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">remove</span><span class="o">-</span><span class="n">service</span><span class="o">=</span><span class="n">dhcpv6</span><span class="o">-</span><span class="n">client</span> <span class="o">--</span><span class="n">permanent</span>
+</pre></div>
+</div>
+<p>Команды довольно простые - list показывает, add добавляет, remove убирает, permanent сохраняет в настройках, reload перезагружает.</p>
+<p><img alt="" src="../../_images/changeservice.png"/></p>
+<p>Можно создавать или изменять сервисы. К примеру, сделаем так, чтобы порт 2233 не висел отдельно, а был в самом сервисе. Для этого уберём из сервиса 22 порт - remove-port:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">permanent</span> <span class="o">--</span><span class="n">service</span><span class="o">=</span><span class="n">ssh</span> <span class="o">--</span><span class="n">remove</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="o">/</span><span class="n">tcp</span>
+</pre></div>
+</div>
+<p>Потом добавим порт 2233 - add-port:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">permanent</span> <span class="o">--</span><span class="n">service</span><span class="o">=</span><span class="n">ssh</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">2233</span><span class="o">/</span><span class="n">tcp</span>
+</pre></div>
+</div>
+<p>Перезапустим и проверим:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">info</span><span class="o">-</span><span class="n">service</span><span class="o">=</span><span class="n">ssh</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/etcfirewalld.png"/></p>
+<p>Если стандартные настройки лежат в <code class="docutils literal notranslate"><span class="pre">/lib/firewalld</span></code>, то наши изменения сохраняются в <code class="docutils literal notranslate"><span class="pre">/etc/firewalld</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">firewalld</span><span class="o">/</span><span class="n">services</span><span class="o">/</span><span class="n">ssh</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>Можно было просто скопировать файл сервиса из lib в etс, сделать изменения в самом файле и перезапустить сервис. Таким же образом можно скопировать существующий сервис и создать новый.</p>
+<p><img alt="" src="../../_images/removeport.png"/></p>
+<p>Ну и раз уж мы в самом сервисе заменили порт, то можем убрать отдельно указанный порт:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">remove</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">2233</span><span class="o">/</span><span class="n">tcp</span> <span class="o">--</span><span class="n">permanent</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/protocols.png"/></p>
+<p>Кроме сервисов и портов, также можно разрешать сетевые протоколы. Они указаны не в firewalld, а в самой системе и их список можно посмотреть в файле <code class="docutils literal notranslate"><span class="pre">/etc/protocols</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tail</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">protocols</span>
+</pre></div>
+</div>
+<p>Для примера, есть протокол ospf:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="n">ospf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">protocols</span>
+</pre></div>
+</div>
+<p>которым пользуются роутеры для обмена информацией о сетях. И если бы мы настраивали Linux как роутер, то нужно было бы добавить протокол ospf на файрволе. Но сейчас нам это не нужно.</p>
+<p><img alt="" src="../../_images/icmptypes.png"/></p>
+<p>Также в list-all можно увидеть icmp-blocks и icmp-blocks-inversion:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">get</span><span class="o">-</span><span class="n">icmptypes</span>
+</pre></div>
+</div>
+<p>ICMP - это специальный протокол, который используют для проверки сети. Помните, в основе сетей мы проверяли доступность сети с помощью ping или traceroute? Эти программы как раз используют ICMP. Так вот, мы использовали ping чтобы понять, доступен ли другой компьютер. Зачастую в интернете боты сканируют сеть с помощью ICMP, чтобы увидеть доступные IP адреса, и потом пытаются их взломать. Нередко администраторы скрывают сервера, блокируя ICMP запросы. Конечно, открытые порты всё ещё будут доступны для подключения, но часть ботов отсеется.</p>
+<p><img alt="" src="../../_images/icmpblockinversion.png"/></p>
+<p>С помощью firewalld мы можем заблокировать все ICMP запросы, либо определённые типы. Второе используется реже, но всё же можно, с помощью опции <code class="docutils literal notranslate"><span class="pre">--add-icmp-block</span></code> и указанием типа. А если блокировать всё, то можно использовать опцию <code class="docutils literal notranslate"><span class="pre">--add-icmp-block-inversion</span></code>, но перед этим попробуем пингануть виртуалку. Пинг идёт. Потом попробуем включить эту опцию:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">icmp</span><span class="o">-</span><span class="n">block</span><span class="o">-</span><span class="n">inversion</span>
+</pre></div>
+</div>
+<p>Теперь мы видим, что ping выдаёт информацию «Packet filtered». Так мы сразу понимаем, что кто-то фильтрует трафик, а именно файрвол. И чтобы всё вернуть - <code class="docutils literal notranslate"><span class="pre">--remove-icmp-block-inversion</span></code>. Пинг опять пошёл. И не забывайте, что для сохранения настроек нужно использовать ключ <code class="docutils literal notranslate"><span class="pre">--permanent</span></code>.</p>
+<p>Вас должно было смутить, что по пингу всё равно можно было понять, компьютер доступен или нет, ведь он ответил нам - packet filtered. Такие блокировки ICMP не столько для скрытия доступности хоста, сколько для скрытия информации о сети, допустим, когда провайдер скрывает адреса своих роутеров. В таких случаях на ICMP запросы посылается ответ REJECT, чтобы было понятно, что эта информация скрыта.</p>
+<p><img alt="" src="../../_images/drop.png"/></p>
+<p>Если же мы хотим именно скрыть компьютер, то нужно поменять другую опцию - target:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>Для этого нужно использовать ответ DROP:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">target</span><span class="o">=</span><span class="n">DROP</span> <span class="o">--</span><span class="n">permanent</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>После этого файрвол будет «дропать» пакеты, т.е. выбрасывать. Если при REJECT мы посылали обратный ответ, то при DROP вторая сторона ничего в ответ не получит, поэтому будет считать, что этот IP недоступен.</p>
+<p><img alt="" src="../../_images/drop2.png"/></p>
+<p>При этом дропаются не только ICMP пакеты, а любые подключения, не соответствующие разрешённым. К примеру, когда target=default, то при попытке подключиться к запрещённому порту я сразу получаю ответ, что не могу. Так можно понять, что где-то блокирует файрвол. А если стоит режим DROP - то программа, которая пытается подключиться, допустим, ssh, будет долго ждать и просто не дождётся ответа. Поэтому это более предпочтительный способ скрыть компьютер.</p>
+<p><img alt="" src="../../_images/vboxnet1.png"/></p>
+<p>Прежде чем продолжим, давайте добавим ещё один адаптер для виртуалки. Для этого сначала её нужно выключить, затем в меню самого виртуалбокса зайти в File - Host Network Manager и проверить, есть ли там сеть, т.е. в табличке под Name должна быть какая-то запись. Если её нет, то нажмите Create и поставьте галочку у «DHCP Server», затем Close.</p>
+<p><img alt="" src="../../_images/vboxnet2.png"/></p>
+<p>После чего надо зайти в настройки самой виртуалки, выбрать Network - Adapter 2, поставить галочку на включение адаптера, выбрать тип «Host-only Adapter» и выбрать из списка созданный адаптер, затем нажать ОК. После этого можно включать виртуалку.</p>
+<p><img alt="" src="../../_images/ipa1.png"/></p>
+<p>После изменений в виртуалке появится новый интерфейс:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>У меня он назвался enp0s8 и получил адрес 192.168.56.3, у вас результат может отличаться. Если попытаемся с хоста пропинговать этот адрес, то ничего не получится - но это и не удивительно, мы ведь запретили пинги. А вот подрубиться по этому адресу к SSH можно, естественно, указав нужный порт при подключении:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">user</span><span class="o">@</span><span class="mf">192.168.56.3</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2233</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/firewalldinterfaces.png"/></p>
+<p>А интерфейс мы добавили не просто так. Если посмотреть файрвол:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>можно заметить, что в строке interfaces появился также enp0s8 - наш новый интерфейс. Зачем на файрволе интерфейсы?</p>
+<p><img alt="" src="../../_images/zbf.jpg"/></p>
+<p>Начнём с того, что нередко сервера могут смотреть сразу в несколько сетей. Например, ваш роутер смотрит одновременно в две сети - в домашнюю и в интернет. Роутер это тоже своего рода сервер, да и из линукса можно сделать маршрутизатор. Так вот, к роутеру можно подключаться, чтобы им управлять. Но позволять кому-то подключаться к роутеру из интернета не очень хорошо, это не безопасно. Поэтому на нём можно настроить, чтобы управлять им можно было только с домашней сети, а не из интернета. Т.е. у вашего роутера есть две так называемые зоны - внешняя сеть и локальная. Внешняя сеть - опасная и недоверенная, все запросы оттуда нужно блокировать. А локальная сеть - относительно безопасная. Если пинги из внешней зоны стоит дропать, то из домашней наоборот, стоит оставить, чтобы было понятно - работает ли роутер. Т.е. всё просто - разные зоны - разное доверие - нужно разное запрещать или разрешать.</p>
+<p><img alt="" src="../../_images/getzones.png"/></p>
+<p>На многих современных файрволах можно настроить различные политики для различных зон. Их также называют zone-based firewall-ами. По умолчанию в firewalld уже прописано несколько зон:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">get</span><span class="o">-</span><span class="n">zones</span>
+</pre></div>
+</div>
+<p>И если вы внимательно смотрели, то заметили, что каждый раз, как мы смотрели файрвол, там красовалось слово public - это зона по умолчанию:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">get</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">zone</span>
+</pre></div>
+</div>
+<p>Политики public мы уже видели и настроили. Некоторые зоны уже преднастроены под определённые случаи, например, в зоне block всё по умолчанию блокируется, в зоне drop - дропается, а в зоне trusted - разрешается:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">block</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">drop</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">trusted</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/changeinterface.png"/></p>
+<p>Так вот, мы можем назначать интерфейсы на зоны. Сейчас у нас оба интерфейса смотрят в зону public, но давайте переместим второй интерфейс в зону trusted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">change</span><span class="o">-</span><span class="n">interface</span><span class="o">=</span><span class="n">enp0s8</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">trusted</span>
+</pre></div>
+</div>
+<p>Это будет временно, а как сделать на постоянно вы уже знаете. После смены интерфейс оказался в trusted зоне:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="n">interfaces</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">trusted</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что теперь к каждой команде я добавляю ключ <code class="docutils literal notranslate"><span class="pre">--zone</span></code> и указываю нужную зону. Потому что все прежние изменения мы делали с дефолтной - public. Если же мы хотим работать с другой зоной, нужно обязательно указывать её в опциях. После смены в дефолтной зоне остался только интерфейс enp0s3. И обратите внимание, так как мы сменили зону для интерфейса, то теперь по адресу на этом интерфейсе идёт пинг и можно подключаться. А адрес, оставшийся на enp0s3 всё ещё не пингуется.</p>
+<p><img alt="" src="../../_images/addsource.png"/></p>
+<p>Но иногда бывает, что каким-то определённым IP адресам мы хотим что-то разрешить или запретить, независимо от интерфейса. К примеру, вы хотите блокировать все входящие соединения на внешний адрес роутера, но у вас на работе есть внешний IP адрес, с которого вы хотите разрешить подключения. Интерфейс, который смотрит в интернет, вы переместили с зону drop, но вы можете определённые IP адреса или сети назначать в другие зоны. К примеру, сейчас у меня новый интерфейс находится в зоне trusted и только что всё пинговалось и подключалось. Давайте я добавлю IP адрес хоста в зону block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">block</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">source</span><span class="o">=</span><span class="mf">192.168.56.1</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">block</span>
+</pre></div>
+</div>
+<p>Даже если у меня интерфейс находится в другой зоне, IP адрес конкретнее, а поэтому при виде запроса с этого IP адреса будет применяться политика из зоны block - т.е. пинги будут фильтроваться. Если же запрос приходит с адреса, который не прописан не в одной зоне как source - то срабатывает политика, которая применяется ко всему интерфейсу.</p>
+<p><img alt="" src="../../_images/addsource.png"/></p>
+<p>Но иногда бывает, что каким-то определённым IP адресам мы хотим что-то разрешить или запретить, независимо от интерфейса. К примеру, вы хотите блокировать все входящие соединения на внешний адрес роутера, но у вас на работе есть внешний IP адрес, с которого вы хотите разрешить подключения. Интерфейс, который смотрит в интернет, вы переместили с зону drop, но вы можете определённые IP адреса или сети назначать в другие зоны. К примеру, сейчас у меня новый интерфейс находится в зоне trusted и только что всё пинговалось и подключалось. Давайте я добавлю IP адрес хоста в зону block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">block</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">source</span><span class="o">=</span><span class="mf">192.168.56.1</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">block</span>
+</pre></div>
+</div>
+<p>Даже если у меня интерфейс находится в другой зоне, IP адрес конкретнее, а поэтому при виде запроса с этого IP адреса будет применяться политика из зоны block - т.е. пинги будут фильтроваться. Если же запрос приходит с адреса, который не прописан не в одной зоне как source - то срабатывает политика, которая применяется ко всему интерфейсу.</p>
+<p><img alt="" src="../../_images/masquerade.png"/></p>
+<p>Ещё одна примечательная опция - masquerade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">external</span>
+</pre></div>
+</div>
+<p>Мы с вами обсуждали NAT - когда вы выходите в интернет, ваш роутер подменяет ваши домашние IP адреса на свой внешний, чтобы другая сторона знала, куда посылать ответ. Так вот, такой тип NAT-а называется Source NAT, так как заменяется source адрес, т.е. адрес отправителя. Это также позволяет скрыть реальные IP адреса отправителей, поэтому также такой NAT называют <code class="docutils literal notranslate"><span class="pre">masquerade</span></code>. И так как Linux можно настроить как роутер, на нём также можно врубить source nat с помощью файрвола. По умолчанию он врублен в зоне external, но, по желанию, можно и других зонах:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">masquerade</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">work</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/nat.png"/></p>
+<p>Чуть ниже masquerade-а есть <code class="docutils literal notranslate"><span class="pre">forward-ports</span></code> - это тоже про NAT, но уже про destination nat - когда заменяется адрес получателя. К примеру, ваш домашний компьютер недоступен из интернета, а ваш роутер - доступен. И вы можете на роутере выделить какой-нибудь порт, к примеру, 5555. И когда на роутер на этот адрес будут приходить запросы, он будет их пересылать на ваш домашний компьютер. Таким образом вы сможете из интернета подключаться к домашнему компьютеру. В простонародье это называется проброс портов. Будет отдельная тема, где я нагляднее объясню Source и Destination NAT.</p>
+<p><img alt="" src="../../_images/sourceports.png"/></p>
+<p>Ну и наконец <code class="docutils literal notranslate"><span class="pre">source-ports</span></code> - исходящие порты. Тему портов мы уже затрагивали, однако  про исходящие порты не говорили. И так, мы знаем, что ssh сервер по умолчанию работает на 22 порту. И когда мы к нему пытаемся подключиться, для нас этот порт является целевым - destination port. Но для отправки и получения ответа мы и сами, на стороне клиента, должны открыть порт - исходящий порт - source port. Но это не 22 порт, а динамический. Обычно это 5-значные порты, где-то от 30 до 60 тысяч. Когда вы клиентом подключаетесь к ssh, заходите через браузер на какой-то сайт и т.п. - то операционная система временно выделяет для софта рандомный порт. Как только сессия закроется - порт перестанет использоваться. И, как правило, source порты рандомные и мало где указываются. Однако, в определённых программах можно выбрать исходящие порты.  И вот на файрволе есть возможность запретить подключаться с других портов. Но это используется довольно редко.</p>
+<p><img alt="" src="../../_images/ss.png"/></p>
+<p>Ну и раз уж мы заговорили о портах, стоит упомянуть команду ss. Вкратце - эта команда показывает сокеты. Помните, мы говорили о сокетах, когда речь шла о логах? Сокеты позволяют процессам общаться между собой. Так вот, сетевые соединения также являются сокетами. Сокеты, которые нужны только между процессами внутри одной системы, называются UNIX сокетами. Ну и соответственно есть TCP и UDP сокеты. К примеру, запустим команду:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">-</span><span class="n">n4</span>
+</pre></div>
+</div>
+<p>Здесь ключ -n - показывать номера портов, вместо имён. А ключ -4 - показывать только сокеты, относящиеся к ipv4. Как видите, вышла одна строка - это tcp сокет, ESTAB - established - означает, что это установленное соединение. Оно установлено на локальный адрес - 192.168.31.5 на порт 2233. И это соединение идёт от адреса 192.168.31.227 - это мой компьютер, с source порта 49994. Это как раз текущее подключение по SSH.</p>
+<p>ss позволяет понять, а какие порты на сервере сейчас активны. Часто бывает нужно понять - а слушает ли демон на таком-то порту? И тут можно использовать команду:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">-</span><span class="n">n4lt</span>
+</pre></div>
+</div>
+<p>l - это listen, т.е. показывает активные порты, за которыми есть демоны. t - это tcp. В итоге мы видим список tcp сокетов с номерами портов, которые слушает наш сервер по ipv4. А если взять список всех сокетов, то их довольно много:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>Мы периодически будем пользоваться этой утилитой.</p>
+<p><img alt="" src="../../_images/nczv.png"/></p>
+<p>Ещё одна важная утилита:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nc</span>
+</pre></div>
+</div>
+<p>По работе вы можете сталкиваться с различными проблемами и не всегда есть возможность точно сказать - проблема с самим приложением или файрвол блокирует? А возможно между пользователем и сервером есть другие файрволы? Если к ssh серверу или сайту можно подключиться утилитами, то не со всеми серверами так просто. Поэтому вам может понадобится понять, а есть ли доступ до сервера и не блокирует ли файрвол? Многие админы используют утилиту telnet, но она не всегда предустановлена, да и не самая удобная. На большинстве Linux-ов зачастую предустановлена утилита nc, и обычно я использую её. Синтаксис для проверки порта простой - <code class="docutils literal notranslate"><span class="pre">nc</span> <span class="pre">-zv</span> <span class="pre">ip</span> <span class="pre">адрес</span> <span class="pre">порт</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nc</span> <span class="o">-</span><span class="n">zv</span> <span class="mf">192.168.31.5</span> <span class="mi">22</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">zv</span> <span class="mf">192.168.31.5</span> <span class="mi">2233</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">zv</span> <span class="mf">192.168.56.3</span> <span class="mi">22</span>
+</pre></div>
+</div>
+<p>Как видите, в первом случае я долго жду ответа, но его нет - это значит, что либо нет демона за этим адресом и портом, либо файрвол дропает запрос. Во втором случае я получил succeeded - т.е. соединение успешно, nc смог подключиться. В третьем случае соединение не прошло - значит, либо хост недоступен, либо файрвол. Но так можно проверять можно только TCP порты, UDP работает несколько иначе, и проверить его бывает затруднительно.</p>
+<p><img alt="" src="../../_images/nclu.png"/></p>
+<p>nc также позволяет передавать сообщения, используя tcp или udp. Если у вас есть доступ на сервер, вы можете понять, а работают ли соединения, не блокирует ли кто-то посередине и в целом заранее убедиться, что с сетью проблем не будет, прежде чем настроить какой-то сервис. К примеру, потестируем udp соединение, на стороне сервера слушаем на udp порту 5555:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nc</span> <span class="o">-</span><span class="n">ul</span> <span class="mi">5555</span>
+</pre></div>
+</div>
+<p>С клиента попытаемся подрубиться:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nc</span> <span class="o">-</span><span class="n">u</span> <span class="mf">192.168.31.5</span> <span class="mi">5555</span>
+</pre></div>
+</div>
+<p>Как видите, соединение не проходит. Я на файрволе не открывал порт, в этом и причина. Добавим порт:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">5555</span><span class="o">/</span><span class="n">udp</span>
+</pre></div>
+</div>
+<p>после чего опять потестим:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nc</span> <span class="o">-</span><span class="n">ul</span> <span class="mi">5555</span>
+</pre></div>
+</div>
+<p>Теперь я могу что-то написать и это придёт на сервер. Для проверки tcp просто заменим ключ -u на -t - и на стороне клиента, и на стороне сервера. Всё довольно просто.</p>
+<p><img alt="" src="../../_images/runtimetoperm.png"/></p>
+<p>Возвращаясь к файрволу. Мы сделали много изменений, но не прописывали permanent - а это значит, что после рестарта все наши изменения слетят. Если же мы хотим сохранить настройки, допустим, мы тестировали и всё нас устроило - то можем использовать ключ <code class="docutils literal notranslate"><span class="pre">--runtime-to-permanent</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">runtime</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">permanent</span>
+</pre></div>
+</div>
+<p>А для просмотра информации по всем зонам - <code class="docutils literal notranslate"><span class="pre">--list-all-zones</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">zones</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/panic.png"/></p>
+<p>Ещё из примечательного - режим паники <code class="docutils literal notranslate"><span class="pre">--panic-on</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">panic</span><span class="o">-</span><span class="n">on</span>
+<span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">panic</span><span class="o">-</span><span class="n">off</span>
+</pre></div>
+</div>
+<p>При его запуске обрываются все соединения и дропаются все входящие и исходящие пакеты. Может пригодиться, скажем, если вас взломали и вам срочно нужно оборвать всё.</p>
+<p><img alt="" src="../../_images/richrules.png"/></p>
+<p>Ну и под конец - <code class="docutils literal notranslate"><span class="pre">--rich-rules</span></code>. До этого мы говорили про зоны, что можно разделить в файрволе сеть по областям, различая по интерфейсам и IP адресам, и к разным применять различные политики. Но иногда бывают нужны точечные правила - только этому адресу разрешить только этот порт и при этом логировать. В некоторых случаях можно создать зону и прописать один source и один сервис, будет чем-то похоже на точечное правило, но это выглядит коряво, всё таки это не зона. Для этого лучше использовать rich-rules. Правда есть нюанс. Скажем, если посмотреть:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>то по выведенному списку очень легко будет понять синтаксис для команд - add-service, add-port, remove-source, change-interface и всё в таком духе. Можно просто два раза tab нажать и увидеть список почти всех доступных команд, а там интуитивно понятно. А с rich rule-ами так не работает, табуляция не поможет, да и не так интуитивно понятно. Но выход простой - в манах есть хорошие примеры:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">firewalld</span><span class="o">.</span><span class="n">richlanguage</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/rulestruct.png"/></p>
+<p>В таких правилах можно указать source и destination адрес, сервис/порт/протокол, а также логирование, аудит и применяемое в итоге действие - пропустить, блокнуть, дропнуть или добавить метку. Метка штука специфичная и пока нам не нужна, а аудит - это тоже своего рода логирование, эту тему мы когда-нибудь разберём.</p>
+<p><img alt="" src="../../_images/ruleexamples.png"/></p>
+<p>Спустимся чуть ниже, где у нас примеры - EXAMPLES.
+Первый пример довольно простой - разрешать протокол ah. Обратите внимание, что в каждом правиле в начале есть слово rule.
+Второй пример - разрешить сервис с именем ftp, также его логировать, при этом не чаще раза в минуту, об этом говорит limit value=»1/m», ну и включён audit.
+Третье правило - разрешать соединения по ipv4 от сети 192.168.0.0/24 к сервису tftp, при этом логировать не чаще раза в минуту, и к логам приписывать префикс tftp, а также важность - info. Если вы помните, при разборе логирования мы упоминали, что в syslog указывается важность лога, это может быть просто информационное сообщение или какая-то ошибка.
+Там есть ещё примеры, но их постарайтесь разобрать сами.</p>
+<p><img alt="" src="../../_images/addrichrule.png"/></p>
+<p>Давайте пропишем правило. Например, разрешать подключение ко второму IP адресу сервера только от адреса моего хоста по порту 2233 и логировать эту информацию не чаще раза в минуту с важностью crit, добавляя prefix MYSSH. Для этого используем опцию <code class="docutils literal notranslate"><span class="pre">--add-rich-rule</span></code>, не забываем указать в начале rule, ну и указываем интересующие нас опции, для начала, что это ipv4, source и destination адреса, порт 2233 и его протокол - tcp, префикс и прочую информацию по логам:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">rich</span><span class="o">-</span><span class="n">rule</span><span class="o">=</span><span class="s1">'rule family="ipv4" source address="192.168.31.227" destination address="192.168.31.6" port port="2233" protocol="tcp" log prefix="MYSSH" level="crit" limit value="1/m" accept'</span>
+</pre></div>
+</div>
+<p>После этого правило появится в зоне, так как мы не указали зону в команде, то оно добавится в дефолтной зоне:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>Ну и протестируем - подключимся к этому адресу и проверим последние логи с уровнем crit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">user</span><span class="o">@</span><span class="mf">192.168.31.6</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2233</span>
+<span class="n">sudo</span> <span class="n">journalctl</span> <span class="o">-</span><span class="n">p</span> <span class="n">crit</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Лог появился и в нём указан входящий интерфейс, ip адреса и прочая информация. Да, rich правила не самые удобные в написании, но с man-ом можно легко вспомнить. А для удаления таких правил опция  <code class="docutils literal notranslate"><span class="pre">--remove-rich-rule</span></code> со всем содержимым правила.</p>
+<p>Давайте подведём итоги. Сегодня мы с вами разобрали firewalld - инструмент, который позволяет гибко и удобно настроить правила в рамках одной или нескольких зон. Синтаксис у команды простой и интуитивно понятный - можно добавлять и убирать порты, сервисы, протоколы, делить сеть на зоны, меняя принадлежность интерфейсов и адресов к какой-либо зоне. Поговорили про ICMP, reject и drop пакетов, а также немного про Source и Destination NAT. Посмотрели утилиту ss, которая выводит информацию о сокетах, а также тестировали соединение с помощью nc. Ну и под конец rich rule-ы - точечные правила, которые позволяют добавлять исключения. И помните, если даже вы забыли синтаксис - всегда есть маны, которые позволят вам вспомнить.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

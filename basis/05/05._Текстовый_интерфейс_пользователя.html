@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>05. Текстовый интерфейс пользователя — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/05/basis.gnulinux.pro/basis/05/05._%D0%A2%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="05._Практика.html" rel="next" title="Практика"/>
+<link href="../04/04._Практика.html" rel="prev" title="Практика"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="05._Текстовый_интерфейс_пользователя.html#">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">05. Текстовый интерфейс пользователя</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="id1">
+<h1>05. Текстовый интерфейс пользователя<a class="headerlink" href="05._Текстовый_интерфейс_пользователя.html#id1" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/wV7ZkcxdqOM" title="YouTube video player" width="560"></iframe>
+<p>Чтобы пользователь мог взаимодействовать с компьютером, операционная система предоставляет два интерфейса – графический и текстовой. Есть заблуждение, что текстовый интерфейс нужен исключительно для задач администрирования, но, на самом деле,  в текстовом интерфейсе можно слушать музыку, читать новости, общаться и даже сёрфить интернет. Графический или текстовый интерфейс – это понятие, а различные реализации называются оболочками.</p>
+<p><img alt="" src="../../_images/bash.png"/></p>
+<p>Благодаря тому, что дистрибутивы GNU/Linux разрабатывает не одна компания, а любой желающий, существует множество различных графических и текстовых оболочек, на любой вкус и цвет. Текстовые оболочки называют интерпретаторами командной строки или shell. По сути, это программы, которые могут отличаться функционалом, но стандартной оболочкой для UNIX-подобных операционных систем является sh, также называемая шелл. А одна из самых популярных называется bash. С помощью интерпретаторов пользователи могут делать практически всё, что может быть связано с запуском программ – ставить условия запуска, использовать переменные, повторять с разными значениями, автоматизировать и т.д. Одно из преимуществ bash над sh - автодополнение. Когда вы что-то печатаете на bash, часто вы можете нажать tab, который допишет команду до конца, а если есть несколько вариантов, то двойное нажатие по tab покажет их.</p>
+<p><img alt="" src="../../_images/emulator.png"/></p>
+<p>Есть 3 основных способа получить доступ к текстовому интерфейсу. При наличии графического интерфейса, чаще всего используется эмулятор терминала. Есть множество различных эмуляторов терминала, в основном они отличаются внешним видом и горячими клавишами.</p>
+<p><img alt="" src="../../_images/virtual_term.png"/></p>
+<p>При отсутствии графического интерфейса, либо при каких-либо проблемах с ним, используется виртуальная консоль, также называемая виртуальным терминалом. Их обычно много и к ним можно подключиться даже имея графический интерфейс, обычно для этого используется комбинация клавиш Alt + Ctrl + F1, F2 и т.д, обычно до F6. Так как VirtualBox перехватывает клавиши, на нём это можно сделать с помощью «правый Ctrl»+F1 и т.п. Графический интерфейс запускается на одной из виртуальных консолей.</p>
+<p><img alt="" src="../../_images/putty.png"/></p>
+<p>Но, чаще всего, администраторы работают с компьютерами не напрямую, а удалённо. Для этого они используют программы для удалённого доступа, работающие с протоколом SSH. Одна из самых популярных на Windows называется Putty, но в Windows 10 это можно делать и без дополнительных программ, просто написав в терминале Windows команду ssh пользователь@айпи.адрес и введя пароль пользователя.</p>
+<p>Программы, работающие в текстовом интерфейсе, часто называют командами. Этих команд огромное количество и знать всё наизусть не нужно. Большинство команд, с которыми вы будете работать, вы без труда запомните, так как их создавали для людей - они просты и логичны.  Сложные команды всегда можно где-нибудь записать или найти. Чтобы знать, как работать с командой, вы должны знать её синтаксис.</p>
+<p><img alt="" src="../../_images/ls.png"/></p>
+<p>Давайте, для примера, рассмотрим команду ls.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span>
+</pre></div>
+</div>
+<p>ls – от cлова list – команда, с помощью которой можно просмотреть содержимое директории. Запомните – GNU/Linux – регистрозависимая операционная система. Если вы напишете L большое или S большое – получится уже другое значение, а так как таких команд нет, интерпретатор выдаст ошибку. Тоже самое касается файлов – файлы file маленькими, FILE  большими, fIle, fILe  и т.д. это разные файлы, которые никак друг с другом не конфликтуют. Но это больше относится файловым системам.</p>
+<p>Когда у вас в терминале много текста это может напрягать, поэтому терминал можно легко очищать с помощью комбинации Ctrl+L или команды clear.  А с помощью стрелок вы можете листать ранее выполненные команды.</p>
+<p><img alt="" src="../../_images/lsi.png"/></p>
+<p>Возвращаясь к команде ls. У большинства команд есть различные опции и многим командам можно передавать значения. Для примера, команда ls -i покажет содержимое директории с соответствующими инодами. «-i» в данном случае – опция. Опции часто называют ключами команды. Если написать ls -i file,  то мы передали команде ключ -i и значение в виде имени файла. Как результат, баш нам показал только информацию по одному файлу.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">i</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>Что делать, если вы забыли или не знаете какой-то ключ или в целом синтаксис? Для этого в системе есть документация, которая также будет доступна во время экзамена по Red Hat. Кстати, об экзамене. Во время экзамена вы вольны пользоваться как графическим интерфейсом, так и текстовым, но, поверьте, на работу с графическим интерфейсом у вас просто не хватит времени. Работать в текстовом интерфейсе гораздо эффективнее. Возвращаясь к документации. Есть 3 основных способа получить доступ к документации – с помощью утилиты man, с помощью утилиты info и при помощи встроенной в большинство команд опции help.</p>
+<p><img alt="" src="../../_images/lsh.png"/></p>
+<p>Самый быстрый и простой способ – опция help.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>Как правило, это не документация, а небольшая подсказка по ключам и синтаксису, которая доступна, если писать команду, а затем два дефиса и help.</p>
+<p><img alt="" src="../../_images/lsman.png"/></p>
+<p>man – утилита для чтения документации, доступная на большинстве UNIX-подобных систем. Допустим, меня интересует документация по команде ls. Я пишу man ls:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>и открывается страница документации. Чтобы её закрыть, нажимаем q. q часто используется различными терминальными программами для выхода. Документацию можно листать с помощью стрелок и клавиш PgUp/PgDn.</p>
+<p><img alt="" src="../../_images/mani.png"/></p>
+<p>Если написать / , а потом какой-то текст, допустим ключ -i, и нажать enter программа попытается найти этот текст в документации. Как правило, в начале документации показывается имя программы, синтаксис, описание и ключи, а в конце у некоторых программ можно найти примеры команд в секции EXAMPLES, а также связанные программы.</p>
+<p><img alt="" src="../../_images/info.png"/></p>
+<p>Что касается утилиты info:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">info</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>она пришла на замену man, хотя большинство до сих пор пользуются man. info лучше работает с большими документами и поддерживает гиперссылки.</p>
+<p><img alt="" src="../../_images/mank.png"/></p>
+<p>А что делать, если вы не знаете команду? В таком случае можно попытаться её найти. Кроме гугла, это можно сделать с помощью команды man с опцией -k, либо команды apropos. Допустим, я не знаю, как поменять пароль пользователю. Я могу написать man -k password:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="o">-</span><span class="n">k</span> <span class="n">passwd</span>
+</pre></div>
+</div>
+<p>и man выдаст мне все страницы документации, в секции NAME которых есть слово password. Результатов может быть много, но, если поискать, можно найти подходящий вариант.</p>
+<p>Кстати, вы заметили циферки рядом с названиями? Давайте посмотрим, что это такое.</p>
+<p><img alt="" src="../../_images/mans.png"/></p>
+<p>Для этого зайдём в документацию самого man, написав man man:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">man</span>
+</pre></div>
+</div>
+<p>Здесь написано, что man состоит из нескольких секций и эти цифры относятся к определённым секциям. Допустим, 1 – это про команды и функции оболочки, 5 – это про формат файлов и т.д.</p>
+<p><img alt="" src="../../_images/mans2.png"/></p>
+<p>В некоторых случаях, для одного слова есть несколько страниц в документации в разных секциях, как например для passwd. passwd у нас это не только команда для смены пароля, но и специальный файл,  в котором хранится информация о пользователях. Чтобы посмотреть документацию по команде, пишем man 1 passwd, а чтобы посмотреть документацию по файлу, пишем man 5 passwd.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="mi">1</span> <span class="n">passwd</span>
+<span class="n">man</span> <span class="mi">5</span> <span class="n">passwd</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/history.png"/></p>
+<p>Ну и напоследок. Всё что вы вводите в терминале, сохраняется в истории. Для просмотра введённых команд используйте команду history.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">history</span>
+</pre></div>
+</div>
+<p>Для повторения предыдущей команды используйте два восклицательных знака, а для повторения какой-то определённой команды из истории, напишите восклицательный знак и номер команды.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!!
+!48
+</pre></div>
+</div>
+<p>Я постарался рассмотреть самые базовые принципы работы с текстовым интерфейсом, но это очень огромная тема с большим количеством всяких плюшек, которые облегчают работу администратору. По мере того, как мы будем проходить другие темы, я буду рассказывать и о других нюансах, но на пока этого достаточно. Без практики вы быстро забудете все команды, поэтому обязательно уделите время практике.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

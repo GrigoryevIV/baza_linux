@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>41. Создание systemd юнитов — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/41/basis.gnulinux.pro/basis/41/41._%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_systemd_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="../42/42._Основы_сетей.html" rel="next" title="42. Основы сетей"/>
+<link href="../40/40._Дедупликация_с_VDO.html" rel="prev" title="40. Дедупликация с VDO"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="41._Создание_systemd_юнитов.html#">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">41. Создание systemd юнитов</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="systemd">
+<h1>41. Создание systemd юнитов<a class="headerlink" href="41._Создание_systemd_юнитов.html#systemd" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/-v3Ai8mjCuA" title="YouTube video player" width="560"></iframe>
+<p><img alt="" src="../../_images/old.png"/></p>
+<p>За последние пару тем мы с вами написали бэкап скрипт, автоматизировали его через cron, а также создали раздел для бэкапов с VDO:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crontab</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">tail</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+</div>
+<p>Этот бэкап стал частью системы - он периодически выполняется, использует какие-то ресурсы, связан с сервисом vdo и всё такое. Почему бы нам не связать его с systemd? Зачем? Есть несколько преимуществ.</p>
+<p>Например, управление. Что мне нужно, чтобы перестать делать бэкапы? Редактировать cron, убрать или закомментировать строчку. А в случае с systemd я могу просто отключить unit - одна простая команда. В принципе, и то и другое не сложно, когда один компьютер. А если у вас компьютеров много? Или, скажем, нужно задачу автоматизировать? Всегда легче выполнить команду, нежели редактировать файл.</p>
+<p>Другой пример - связанность с другими задачами. Допустим, у вас есть антивирус, который раз в день проверяет систему. И вы хотите делать бэкап только после проверки антивирусом. Обычно cron запускает задачу в указанный срок, независимо от других задач. Вы, конечно, можете в самом скрипте это как-то связать, но это будет костылём. А systemd позволит вам связать различные сервисы, выстроить зависимости.</p>
+<p>Ещё один пример - файловая система, которая монтируется в /backup. При текущем конфиге fstab она монтируется при запуске системы. Но, по хорошему, в большую часть времени эта файловая система не нужна, и, если вдруг что-то произойдёт с системой, кто-то там сделает rm -rf или запустит шифровальщик, то все наши бэкапы полетят.  Почему бы не держать эту файловую систему в отмонтированном состоянии и подключать только при необходимости, когда мы делаем бэкап? Да, конечно, это можно сделать и через сам скрипт, и через cron, только это будет костылём - у нас либо скрипт перестанет быть универсальным, либо придётся через cron. В принципе, cron не плохой вариант, но, как я говорил выше, командами всё же предпочтительнее.</p>
+<p><img alt="" src="../../_images/mansystemd.png"/></p>
+<p>И так, что мы сделаем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">systemd</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">/</span> <span class="pre">Service</span> <span class="pre">units</span></code></p>
+<p>Создадим пару различных юнитов systemd: во-первых - сервис, который будет запускать наш скрипт для бэкапа; во-вторых - таймер, который будет задавать периодичность бэкапа; в-третьих - mount, который будет монтировать файловую систему /backup; в четвёртых - автомаунт, который будет запускать третий пункт при необходимости, а не при запуске компьютера; в-пятых - таргет - чтобы объединить несколько сервисов в одну группу. Остальные типы юнитов обычно трогать не надо, их настройка нужна для более редких задач.</p>
+<p><img alt="" src="../../_images/listmounts.png"/></p>
+<p>Свои unit-ы желательно создавать в директории /etc/systemd/system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span>
+</pre></div>
+</div>
+<p>Это просто текстовые файлы с определённым расширением и синтаксисом. Для начала создадим mount юнит, так как он нам пригодится в дальнейшем. Обычно имя mount юнита совпадает с путём монтирования и systemd сам генерирует эти юниты на основе fstab-а:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="nb">list</span><span class="o">-</span><span class="n">units</span> <span class="o">--</span><span class="nb">type</span> <span class="n">mount</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/catbackupsmount.png"/></p>
+<p>Давайте  просто возьмём готовый юнит и используем его:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">cat</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>Скопируем всё что здесь есть, создадим файл с таким же названием:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>и вставим сюда скопированное. Я собираюсь убрать эту строчку из fstab, чтобы только systemd управлял этой файловой системой, поэтому немного подредактируем файл.</p>
+<p><img alt="" src="../../_images/backupsmount.png"/></p>
+<p>Уберём комментарии в начале. Сперва идёт секция [Unit] - она есть во всех юнитах systemd и в ней указывается описание юнита и зависимости от других сервисов. Убираем лишнее - SourcePath и Documentation - они указывают на то, что этот юнит был сгенерирован systemd, что не актуально для нашей ситуации. Добавим Description=Mount for backups. Ниже указаны зависимости - Before, After и Requires. Before и After говорят о том, что данный mount должен быть запущен до local-fs таргета и после vdo.service, т.е. эти опции определяют порядок запуска юнитов. А Requires говорит о том, что для работы этого юнита необходим также сервис vdo, если тот сервис не запущен или его не получается запустить, то не нужно запускать этот mount.</p>
+<p>В секции [Mount] всё предельно понятно: Where - куда монтировать; What - какую файловую систему; Type - тип этой файловой системы; Options - опции монтирования, всё как в fstab. Опция x-systemd.requires больше не нужна, так как она нужна была для генерации вышеуказанных зависимостей от vdo. Это нужно для fstab-а, а мы сразу создаём mount через systemd. На этом сохраняем файл и выходим.</p>
+<p><img alt="" src="../../_images/umountold.png"/></p>
+<p>Но, прежде чем пойти дальше, нужно убрать или закомментировать строчку в fstab и отмонтировать файловую систему:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+<span class="n">tail</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+<span class="n">sudo</span> <span class="n">umount</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/catbackupsmount2.png"/></p>
+<p>Чтобы systemd перечитал свои файлы и увидел наш mount файл, нужно запустить:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Проверим, увидел ли он наши изменения:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">cat</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>Да, это наш изменённый файл.</p>
+<p><img alt="" src="../../_images/backupstest.png"/></p>
+<p>Теперь протестируем наш mount. Посмотрим, примонтировано ли что-то в /backups:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Как видите, /backups сейчас принадлежит корневой файловой системе. Запустим наш юнит:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+<span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Теперь файловая система с vdo примонтировалась куда нужно. Остановим юнит:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+<span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Теперь ничего не примонтировано. Т.е. сейчас за монтирование отвечает только systemd - в зависимости от того, запущен юнит или нет, у нас будет монтироваться файловая система.</p>
+<p><img alt="" src="../../_images/catautomount.png"/></p>
+<p>Для примера, рассмотрим ещё юнит automount. В нашей ситуации он не нужен, но в целом полезно знать. Сейчас наша файловая система отмонтирована, а значит /backups пустой:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>automount позволяет монтироваровать файловую систему при запросе к ней:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="nb">list</span><span class="o">-</span><span class="n">units</span> <span class="o">--</span><span class="nb">type</span> <span class="n">automount</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">systemctl</span> <span class="n">cat</span> <span class="n">proc</span><span class="o">-</span><span class="n">sys</span><span class="o">-</span><span class="n">fs</span><span class="o">*</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Т.е. пока нам не нужно, файловая система не примонтирована. Но стоит нам посмотреть или зайти в эту директорию - systemd сам примонтирует то что нужно. Выйдем, не будем пользоваться - отмонтирует. Это обычно нужно для сетевых файловых систем, для зашифрованных дисков и т.п. - чтобы сократить время запуска операционной системы, и даёт кое-какие определённые плюсы, которые нам сейчас не интересны.</p>
+<p><img alt="" src="../../_images/backupsautomount2.png"/></p>
+<p>automount юнит должен называться как и сам mount, но после точки - automount:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>Так как и при автомонтировании нам нужен сервис vdo, секция [Unit] со всеми зависимостями должна совпадать, поэтому просто скопируем с основного mount:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">cat</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>Основная секция: <code class="docutils literal notranslate"><span class="pre">[Automount]</span></code>. Здесь мы указываем <code class="docutils literal notranslate"><span class="pre">Where=/backups</span></code>, т.е. куда мы заходим, чтобы у нас автомонтировалась файловая система. Также здесь время для размонтирования - <code class="docutils literal notranslate"><span class="pre">TimeoutIdleSec=10</span></code>. Т.е. если на протяжении 10 секунд не обращаться к примонтированной файловой системе, она автоматом отмонтируется. Я указал небольшое время для теста, в реальных условиях обычно больше. В отличии от предыдущего юнита,  который мы хотим запускать при необходимости, этот юнит должен работать всегда -  если этот юнит не будет работать, автомонтирования не будет. Поэтому нам нужно, чтобы юнит запускался при включении компьютера. Для этого нужна секция <code class="docutils literal notranslate"><span class="pre">[Install]</span></code>. Здесь обычно указывают, каким сервисом или таргетом требуется данный юнит, и, как правило, речь про multi-user.target - <code class="docutils literal notranslate"><span class="pre">WantedBy=multi-user.target</span></code>. Сохраним и выйдем.</p>
+<p><img alt="" src="../../_images/automountreload.png"/></p>
+<p>Применим наш конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Затем включить и запустим сервис:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="o">--</span><span class="n">now</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>Здесь ключ –now нужен, чтобы разом добавить в автозапуск и включить юнит. Также проверим статус:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">status</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>Всё работает.</p>
+<p><img alt="" src="../../_images/testautomount.png"/></p>
+<p>Теперь потестим. Для начала убедимся, что ничего не примонтировано:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>Вроде не примонтировано. А попробуем посмотреть содержимое:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Файлы на месте. Сразу же проверим список примонтированных файловых систем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>Как видите, файловая система примонтировалась. Подождём немного и перепроверим:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>опять пусто.</p>
+<p><img alt="" src="../../_images/disautomount.png"/></p>
+<p>Но, как я говорил,  нам automount не нужен, поэтому его убираем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">disable</span> <span class="o">--</span><span class="n">now</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>Теперь сделаем  сам сервис:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">mybackups</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>В секции <code class="docutils literal notranslate"><span class="pre">[Unit]</span></code> укажем описание - <code class="docutils literal notranslate"><span class="pre">Description=Creating</span> <span class="pre">/home/user</span> <span class="pre">backup</span></code>. Укажем, что для работы сервиса нужен юнит backups.mount и что этот сервис запускается только после него - <code class="docutils literal notranslate"><span class="pre">Requires=backups.mount</span></code>, <code class="docutils literal notranslate"><span class="pre">After=backups.mount</span></code>. Дальше добавляем секцию <code class="docutils literal notranslate"><span class="pre">[Service]</span></code> - здесь мы указываем что и как запускать, какие-то дополнительные команды до и после, от какого пользователя, что делать, если сервис упал и кучу других настроек. Для начала нужно указать тип - <code class="docutils literal notranslate"><span class="pre">Type=oneshot</span></code> - этот тип используется для скриптов.</p>
+<p><img alt="" src="../../_images/types.png"/></p>
+<p>В чём суть типа - обычно за сервисом стоят демоны - программы, которые постоянно работают на фоне. И systemd отслеживает состояние процесса, который запустила, по pid-у. И если с этой программой что-то не так, если вдруг процесс остановился, systemd может попробовать перезапустить программу. В случае скриптов всё проще - скрипт запустился, сделал свой дело и завершился. Нужно ведь предупредить systemd, что если запущенная программа завершилась, это не говорит ни о чём плохом - просто скрипт выполнил свою задачу. В общем, программы работают по разному и systemd должен знать, как себя вести в тех или иных случаях.</p>
+<p><img alt="" src="../../_images/mybackupservice.png"/></p>
+<p>По хорошему, стоит избегать использования root-а и backup должен запускаться от специального пользователя. Я не настраивал права и это не совсем входит в данную тему, но для примера я оставлю в закомментированном виде запись <code class="docutils literal notranslate"><span class="pre">User=backup</span></code>, т.е. от чьего имени будет запускаться сервис. Основная строчка - <code class="docutils literal notranslate"><span class="pre">ExecStart=/home/user/mybackupscript</span></code> - собственно, то что нужно запускать. Можем воспользоваться плюсами systemd - посылать стандартный вывод и ошибки в syslog, чтобы потом смотреть и сортировать через journalctl - <code class="docutils literal notranslate"><span class="pre">StandardOutput=syslog</span></code>, <code class="docutils literal notranslate"><span class="pre">StandardError=syslog</span></code>, <code class="docutils literal notranslate"><span class="pre">SyslogIdentifier=mybackup</span></code>. Зачастую в сервисе добавляют секцию <code class="docutils literal notranslate"><span class="pre">Install</span></code>, чтобы он автоматом запускался при включении компьютера, но это не актуально для нас - нам не нужно при каждом включении делать бэкап, скрипт будет запускаться таймером. Поэтому с сервисом достаточно, сохраняем и закрываем. Тут ещё может быть миллион разных настроек в зависимости от типа сервиса, но у systemd неплохая документация, если вам нужно что-то конкретное - всегда сможете найти или спросить.</p>
+<p><img alt="" src="../../_images/reloadservice.png"/></p>
+<p>Опять же, перезапускаем демон:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Прежде чем потестить, я немного подправлю скрипт:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="o">~/</span><span class="n">mybackupscript</span>
+</pre></div>
+</div>
+<p>Раньше он сам отвечал за перенаправление вывода в лог файл (&amp;&gt; $BDIR/$FILENAME.log), теперь этим занимается systemd. Также подправим директорию бэкапа - /backups. Прежде чем потестить, проверим, примонтирована ли файловая система:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>нет, отлично.</p>
+<p><img alt="" src="../../_images/selinux.png"/></p>
+<p>Попробуем запустить сервис:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mybackups</span>
+</pre></div>
+</div>
+<p>и видим ошибку. SElinux не разрешает нашему сервису запустить скрипт. О SElinux мы ещё поговорим, но вкратце - это система безопасности.</p>
+<p><img alt="" src="../../_images/fixedselinux.png"/></p>
+<p>Я подозреваю, в чём дело - ей не нравится, что сервис пытается что-то запустить из домашней директории. Это легко исправить - просто переместим наш скрипт в /usr/local/bin и подправим строчку ExecStart в сервисе:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">cp</span> <span class="o">~/</span><span class="n">mybackupscript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">sudo</span> <span class="n">nano</span> <span class="n">mybackups</span><span class="o">.</span><span class="n">service</span>
+<span class="n">grep</span> <span class="n">ExecStart</span> <span class="n">mybackups</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>и перечитаем конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/startmybackups.png"/></p>
+<p>Попытка номер 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mybackups</span>
+</pre></div>
+</div>
+<p>Подождали немного - и всё сработало:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>При запуске сервиса у нас выполняется бэкап. И даже файловая система примонтировалась:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>потому что сервис бэкапа требовал backups.mount. И если посмотреть статус сервиса:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">mybackups</span>
+</pre></div>
+</div>
+<p>внизу видны логи.</p>
+<p><img alt="" src="../../_images/journalctl1.png"/></p>
+<p>Их также можно посмотреть через journald:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">journalctl</span> <span class="o">-</span><span class="n">eu</span> <span class="n">mybackups</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/bindsto.png"/></p>
+<p>Но так как мы убрали automount, файловая система всё ещё висит, даже если бэкап завершился:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>Попробуем это подправить. Для этого свяжем юнит mount с сервисом:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>и в секцию <code class="docutils literal notranslate"><span class="pre">[Unit]</span></code> добавим <code class="docutils literal notranslate"><span class="pre">BindsTo=mybackups.service</span></code>. Благодаря этой опции mount будет следить за сервисом - если тот перестанет работать, то и mount завершится. Ладно, сохраним и выйдем.</p>
+<p><img alt="" src="../../_images/bindsto2.png"/></p>
+<p>Давайте тестировать. Для начала, перечитаем конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Затем остановим backups.mount:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">backups</span><span class="o">.</span><span class="n">mount</span>
+</pre></div>
+</div>
+<p>и убедимся в этом:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Как видите, примонтирована корневая файловая система, а не vdo. Теперь стартанём сервис бэкапа:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mybackups</span>
+</pre></div>
+</div>
+<p>После чего сразу проверим:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Как видите, vdo не примонтирован. Но если примонтировать вручную:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">myvdo</span> <span class="o">/</span><span class="n">backups</span>
+<span class="n">ls</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>то последние бэкапы там есть.</p>
+<p><img alt="" src="../../_images/mountbackup.png"/></p>
+<p>Правда есть довольно весомый минус - <code class="docutils literal notranslate"><span class="pre">BindsTo</span></code> делает такую привязку, что даже при простом монтировании этой файловой системы в эту директорию, как указано в юните, запускается сервис mybackups. Для примера, проверим, примонтирована ли файловая система:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vdo</span>
+</pre></div>
+</div>
+<p>пусто. Теперь примонтируем вручную:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">myvdo</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>Посмотрим содержимое:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">backups</span>
+</pre></div>
+</div>
+<p>и сразу тут появился файл с новым бэкапом. Т.е. монтирование привело к запуску mount юнита, а он запустил сервис бэкапа. Через какое-то время бэкап закончится, сервис остановится, что приведёт к остановке mount-а и файловая система отмонтируется. С одной стороны это легко обойти - при необходимости можно просто монтировать в другую директорию, чтобы лишний раз не делать бэкап. С другой - будь у нас демон, а не скрипт, такой проблемы не было бы, так как есть другая опция - <code class="docutils literal notranslate"><span class="pre">PartOf</span></code>, вместо <code class="docutils literal notranslate"><span class="pre">BindsTo</span></code>, которая не вызывала бы лишний раз сервис бэкапа. Но эта опция отрабатывает только если сервис стопится с помощью systemd, а не скрипт завершается.  Также есть другая опция - <code class="docutils literal notranslate"><span class="pre">StopWhenUnneeded</span></code> - останавливает юнит, если сейчас никакой другой юнит не требует работы этого. Но почему-то у меня это не сработало.</p>
+<p><img alt="" src="../../_images/timerstypes.png"/></p>
+<p>Теперь перейдём к таймеру. Имя таймера должно соответствовать имени сервиса, но в конце - <code class="docutils literal notranslate"><span class="pre">.timer</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">mybackups</span><span class="o">.</span><span class="n">timer</span>
+</pre></div>
+</div>
+<p>Опять же, начинаем с секции <code class="docutils literal notranslate"><span class="pre">[Unit]</span></code>, где добавляем описание - <code class="docutils literal notranslate"><span class="pre">Description=Timer</span> <span class="pre">for</span> <span class="pre">my</span> <span class="pre">backup</span> <span class="pre">service</span></code>. Потом добавляем секцию <code class="docutils literal notranslate"><span class="pre">[Timer]</span></code>, где и будем указывать периодичность бэкапа. Время можно задавать по разному - связать его с определёнными часами и минутами, например, в 11 вечера каждое воскресенье, либо со временем запуска компьютера, например, через 15 минут после включения, либо промежуток времени от последнего запуска таймера. Много различных вариантов, поэтому мы сделаем так  - делать бэкапы каждый день в 11 вечера, а если вдруг компьютер был выключен и пропустил один бэкап - то сделать его после включения.</p>
+<p><img alt="" src="../../_images/timer.png"/></p>
+<p>Для этого мне понадобится опция <code class="docutils literal notranslate"><span class="pre">OnCalendar</span></code> со значением</p>
+<p><code class="docutils literal notranslate"><span class="pre">*-*-*</span> <span class="pre">23:50:00</span></code></p>
+<p>Здесь первые три звёздочки - это год, месяц и день. Хотя можно указывать по разному. Также добавлю опцию <code class="docutils literal notranslate"><span class="pre">Persistent=true</span></code>. Это как раз для того, чтобы в случае пропускания таймера, если компьютер был выключен, после включения автоматом сработал наш бэкап сервис. Ну и для таймеров существует отдельный таргет, который можно указать в секции <code class="docutils literal notranslate"><span class="pre">[Install]</span></code>, чтобы добавить таймер в автозапуск.</p>
+<p><img alt="" src="../../_images/listtimers.png"/></p>
+<p>Опять же, после сохранения файла перечитываем конфиги:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Потом включаем таймер:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="o">--</span><span class="n">now</span> <span class="n">mybackups</span><span class="o">.</span><span class="n">timer</span>
+</pre></div>
+</div>
+<p>Ну и смотрим список активных таймеров и время их срабатывания:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="nb">list</span><span class="o">-</span><span class="n">timers</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/testtarget.png"/></p>
+<p>Напоследок, рассмотрим таргеты. В основном таргеты мы создаём, чтобы объединять юниты в группы и через эту группу управлять ими, указывать целую группу в зависимостях и т.п.. Это не совсем подходит под нашу задачу, но для примера используем что-нибудь другое. У нас остался неиспользованный automount, возьмём его для теста. Создадим таргет:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">testmounts</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>Создаём секцию [Unit] и добавляем <code class="docutils literal notranslate"><span class="pre">Description=Target</span> <span class="pre">for</span> <span class="pre">automounts</span></code>. И создаём секцию <code class="docutils literal notranslate"><span class="pre">[Install]</span></code>, где укажем, чтобы наш таргет грузился при включении компьютера - <code class="docutils literal notranslate"><span class="pre">WantedBy=multi-user.target</span></code>. Сохраняем и выходим.</p>
+<p><img alt="" src="../../_images/enabletarget.png"/></p>
+<p>Перечитываем конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Включаем наш таргет, чтобы он грузился при запуске системы:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">testmounts</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/installtest.png"/></p>
+<p>Дальше надо в юнитах, которые мы хотим объединить, указать этот таргет в секции <code class="docutils literal notranslate"><span class="pre">[Install]</span></code>, вместо multi-user таргета - <code class="docutils literal notranslate"><span class="pre">WantedBy=testmounts</span></code>.target. Сохраняем и выходим.</p>
+<p><img alt="" src="../../_images/testtarget1.png"/></p>
+<p>Снова перечитываем конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>И включаем automount:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>Обратите внимание, где создалась символическая ссылка - у таргета появилась своя директория, как это было у multi-user-а. Теперь у нас есть таргет, внутри которого один юнит. Ну и перед тестом проверим статус automount-а - он выключен.</p>
+<p><img alt="" src="../../_images/starttarget.png"/></p>
+<p>Попробуем стартануть таргет:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">testmounts</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>и перепроверим статус automount-а - он запустился. Но при остановке таргета:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">testmounts</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>сервис сам не останавливается:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">status</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>С одной стороны это хорошо - это немного безопаснее, чтобы случайно не вырубить важный сервис.</p>
+<p><img alt="" src="../../_images/partoftarget.png"/></p>
+<p>Однако, если мы всё же хотим, чтобы юнит перезагружался вместе с таргетом, можно в секцию <code class="docutils literal notranslate"><span class="pre">[Unit]</span></code> добавить опцию <code class="docutils literal notranslate"><span class="pre">PartOf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PartOf=testmounts.target</span></code></p>
+<p>Сохраняем и выходим.</p>
+<p><img alt="" src="../../_images/stopworks.png"/></p>
+<p>А дальше как обычно - перечитываем конфиг:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>Посмотрим статус юнита:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>работает. Попробуем стопнуть таргет:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">testmounts</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>а потом заново посмотреть статус сервиса:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">backups</span><span class="o">.</span><span class="n">automount</span>
+</pre></div>
+</div>
+<p>сервис стопнулся. Т.е. всё правильно.</p>
+<p>Подведём итоги. Мы с вами научились делать юниты для systemd - mount, automount, service, timer и target. Это довольно простая задача. И хотя эта тема невероятно огромная, в большинстве случаев хватает небольших юнит файлов. В системе и интернете есть  документация и большое количество примеров. Хотя mount-ы и timer-ы могут встречаются реже и вместо них всегда можно использовать cron и fstab, с сервисами всё несколько иначе. Нередко администраторам попадаются программы, которые нужно запускать при включении сервера, но, либо производитель не дал готовые файлы для systemd, либо эту программу написали ваши программисты, которые могут не разбираться в systemd, ну или вы сами хотите изменить процесс, построить его иначе. И, вместо того, чтобы при каждом включении вручную всё запускать, вы всегда можете сделать из скриптов и программ сервисы, которые автоматизируют и облегчат вам работу.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

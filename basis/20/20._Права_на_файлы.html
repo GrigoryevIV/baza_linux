@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>20. Права на файлы — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/20/basis.gnulinux.pro/basis/20/20._%D0%9F%D1%80%D0%B0%D0%B2%D0%B0_%D0%BD%D0%B0_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="20._Практика.html" rel="next" title="Практика"/>
+<link href="../19/19._Практика.html" rel="prev" title="Практика"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="20._Права_на_файлы.html#">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">20. Права на файлы</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="id1">
+<h1>20. Права на файлы<a class="headerlink" href="20._Права_на_файлы.html#id1" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/BVnsrkL6ODw" title="YouTube video player" width="560"></iframe>
+<p><img alt="" src="../../_images/stat.png"/></p>
+<p>В теме «О файловых системах» мы познакомились с таким понятием, как инода – в ней хранится всякая информация о файле. С помощью утилиты stat мы можем увидеть часть этой информации и сейчас нас интересует 4 строка, где указаны стандартные UNIX права на этот файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">temp</span>
+<span class="n">cd</span> <span class="n">temp</span>
+<span class="n">touch</span> <span class="n">file</span>
+<span class="n">stat</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/ugoperms.png"/></p>
+<p>Доступы пользователей к файлам можно разделить на 3 категории: либо пользователь является владельцем этого файла и для него есть обозначение u - user; либо пользователь относится к группе, для которой выделены какие-то права на этот файл – обозначение для них – g - group; либо он относится к остальным – все остальные пользователи, которые не подходят под первую и вторую категорию – для них обозначение o - others. Конечно, есть ещё root – он может делать всё что угодно.</p>
+<p><img alt="" src="../../_images/rwxperms.png"/></p>
+<p>Что касается самих прав, то они делятся на три типа: право на чтение файла – обозначается как r — read; право на изменение файла – обозначается как w — write; право на запуск файла - обозначается как x – execute. Право на запуск обычно относится к программам и скриптам.</p>
+<p><img alt="" src="../../_images/ugorwx.png"/></p>
+<p>Теперь, указывая для владельца, группы и остальных права на файл, мы получаем такое значение:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rwxrwxrwx</span>
+</pre></div>
+</div>
+<p>Первая тройка rwx это для владельца, вторая для группы, третья для остальных. Такое обозначение говорит, что мы разрешаем и владельцу, и группе и остальным читать файл, изменять его и запускать.</p>
+<p><img alt="" src="../../_images/cutperm.png"/></p>
+<p>Если же мы хотим владельцу разрешить всё, группе разрешить только читать и изменять, а остальным ничего, получаем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rwxrw</span><span class="o">----</span>
+</pre></div>
+</div>
+<p>где отсутствующие права заменены на дефисы.</p>
+<p><img alt="" src="../../_images/lsl1.png"/></p>
+<p>Кроме stat, можно использовать ls -l или его алиас ll:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">~</span>
+</pre></div>
+</div>
+<p>где в первом столбце также отображаются права на файлы, в 3 отображается владелец, а в четвёртом группа.</p>
+<p><img alt="" src="../../_images/chown.png"/></p>
+<p>Теперь, как это всё менять. Начнём с владельца. Чтобы поменять владельца нужна команды chown – change owner. Но даже если мы владелец этого файла, без прав суперпользователя мы это сделать не сможем. Потому что если какой-то пользователь создаст файл, а потом укажет, что владельцем файла является другой пользователь, то он сможет подставить другого пользователя. Или, например, использовать выделенное для второго пользователя место в своих целях, когда каждому пользователю выделено сколько-то места на диске. Поэтому, чтобы поменять владельца, нужно использовать sudo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="n">file</span>
+<span class="n">sudo</span> <span class="n">chown</span> <span class="n">user4</span> <span class="n">file</span>
+<span class="n">ll</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/chownr.png"/></p>
+<p>Если мы хотим это сделать для всех файлов в директории и во всех поддиректориях, вы уже знаете, для этого нужно делать рекурсивно:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="nb">dir</span>
+<span class="n">touch</span> <span class="nb">dir</span><span class="o">/</span><span class="n">file</span><span class="p">{</span><span class="mf">1..10</span><span class="p">}</span>
+<span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">user4</span> <span class="nb">dir</span>
+<span class="n">ll</span> <span class="nb">dir</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/chgrp.png"/></p>
+<p>Группу также можно поменять с помощью chown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file</span><span class="p">{</span><span class="mf">1..3</span><span class="p">}</span>
+<span class="n">chown</span> <span class="o">-</span><span class="n">v</span> <span class="p">:</span><span class="n">group1</span> <span class="n">file1</span>
+</pre></div>
+</div>
+<p>Здесь ключ -v - verbose - только для вывода информации. Можно сменить разом владельца и группу:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">v</span> <span class="n">user</span><span class="p">:</span><span class="n">user</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>А вообще, чтобы менять группу, есть отдельная команда:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chgrp</span> <span class="n">group1</span> <span class="n">file3</span>
+</pre></div>
+</div>
+<p>Как видите, чтобы менять группу, не нужны права root-а, конечно, если вы владелец файла.</p>
+<p><img alt="" src="../../_images/chmod1.png"/></p>
+<p>Теперь касательно самих прав. Для начала вернём все файлы нашему пользователю, они нам пригодятся:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">user</span> <span class="nb">dir</span>
+<span class="n">cd</span> <span class="nb">dir</span>
+</pre></div>
+</div>
+<p>Для смены прав используется команда chmod. Допустим, если мы хотим владельцу разрешить читать и изменять файл, пишем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> <span class="n">u</span><span class="o">+</span><span class="n">rw</span> <span class="n">file1</span>
+</pre></div>
+</div>
+<p>Хотим группе запретить изменять файл, пишем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> <span class="n">g</span><span class="o">-</span><span class="n">w</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>Хотим всем разрешить запускать файл, пишем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">file3</span>
+</pre></div>
+</div>
+<p>Группе и остальным запретить читать файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> <span class="n">go</span><span class="o">-</span><span class="n">r</span> <span class="n">file4</span>
+</pre></div>
+</div>
+<p>+ добавляет, - убавляет. Также можно использовать =, чтобы выставить определённые права, допустим:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">-</span><span class="n">v</span> <span class="n">ugo</span><span class="o">=</span><span class="n">r</span> <span class="n">file5</span>
+</pre></div>
+</div>
+<p>тогда останутся только права на чтение. chmod тоже работает рекурсивно с ключом -R. В целом по буквам понятно и это несложный способ, но он больше про изменение – кому-то что-то добавить, у кого-то что-то отнять. И если права для всех отличаются – придётся вводить две-три команды, чтобы выставить нужные права.</p>
+<p><img alt="" src="../../_images/numeric.png"/></p>
+<p>Часто легче использовать цифровой способ. У каждого права есть своя цифра – у read это 4, у write это 2, у execute это 1. И используя сумму этих чисел можно задать права разом. Допустим, rwx – это 4+2+1 – 7, rwxrwxrwx – это 777, rwxr-x— - это 750, rwxrw-r– - это 754. Так и пишем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">777</span> <span class="n">file6</span>
+<span class="n">chmod</span> <span class="mi">750</span> <span class="n">file6</span>
+<span class="n">chmod</span> <span class="mi">754</span> <span class="n">file6</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/chmoddir.png"/></p>
+<p>Если же говорить о директориях, вспомните, что директория как лист, в котором указаны имена файлов и их иноды – т.е. жёсткие ссылки:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="nb">dir</span><span class="p">{</span><span class="mf">1..3</span><span class="p">}</span>
+<span class="n">touch</span> <span class="nb">dir</span><span class="p">{</span><span class="mf">1..3</span><span class="p">}</span><span class="o">/</span><span class="n">file</span>
+<span class="n">chmod</span> <span class="mi">400</span> <span class="n">dir1</span>
+<span class="n">chmod</span> <span class="mi">600</span> <span class="n">dir2</span>
+<span class="n">chmod</span> <span class="mi">700</span> <span class="n">dir3</span>
+<span class="n">ll</span> <span class="nb">dir</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>read позволяет видеть только имена файлов – список файлов и директорий — как в dir1.</p>
+<p><img alt="" src="../../_images/chmoddir2.png"/></p>
+<p>write позволяет изменять её содержимое - добавлять, переименовывать или удалять файлы – опять же, на самом деле это даже не файлы, а жёсткие ссылки - т.е. «записи на листе». Это как добавлять какие-то записи в лист или стирать их, при этом, не важно, есть у вас права на сами эти файлы или нет:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">dir2</span><span class="o">/</span><span class="n">file1</span>
+<span class="n">touch</span> <span class="n">dir3</span><span class="o">/</span><span class="n">file1</span>
+</pre></div>
+</div>
+<p>Как вы видите, несмотря на то, что write позволяет изменять содержимое директории, это не работает без execute. А execute позволяет заходить в эту директорию с помощью cd:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">dir2</span>
+<span class="n">cd</span> <span class="n">dir3</span>
+</pre></div>
+</div>
+<p>и выполнять операции с содержимым директории. Т.е. без execute write бесполезен.</p>
+<p><img alt="" src="../../_images/lldir2.png"/></p>
+<p><img alt="" src="../../_images/nano2.png"/></p>
+<p>При этом без execute вы не сможете работать с файлами внутри этой директории, даже если у вас есть права на них:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="n">dir2</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>обратите внимание на ошибку, которая говорит, что данный путь недоступен.</p>
+<p><img alt="" src="../../_images/shared.png"/></p>
+<p>Как я сказал, права write и execute позволяют изменять содержимое директории, допустим, удалять файлы, даже если у нас нет права на сами файлы. Допустим, создадим общую директорию для группы пользователей:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>пусть у неё будет владелец root, а группа group1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chgrp</span> <span class="n">group1</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+<span class="n">ll</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>в которую входят user и user4:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">lid</span> <span class="o">-</span><span class="n">g</span> <span class="n">group1</span>
+</pre></div>
+</div>
+<p>И выставим права на директорию:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">770</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>чтобы у рута и группы были все права, а у остальных никаких.</p>
+<p><img alt="" src="../../_images/rmgroup.png"/></p>
+<p>Значит, пользователь root, user и user4 могут создавать тут файлы:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+<span class="n">sudo</span> <span class="n">touch</span> <span class="n">file1</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">user4</span> <span class="n">touch</span> <span class="n">file2</span>
+<span class="n">touch</span> <span class="n">file3</span>
+<span class="n">ll</span>
+</pre></div>
+</div>
+<p>Как видите, тут 3 файла и write права у меня есть только на файл user-а, а другие я изменять не могу:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file1</span>
+</pre></div>
+</div>
+<p>При этом, я могу запросто удалить чужие файлы:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>потому что у группы group1 есть права write на эту директорию:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/homeshared.png"/></p>
+<p>Вы, возможно, подумали – это ж как-то неправильно, нехорошо. Кто-то может случайно или специально удалить чужие файлы. Поэтому есть специальный атрибут – дополнительное право, называемое sticky bit, которое защищает файлы внутри директории. Поставить его можно используя буквенное обозначение:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">t</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>либо используя цифровое обозначение – у стикибита цифра 1 и она ставится перед правами:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">1770</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>После того, как вы поставите sticky bit на директорию, у неё появится буква T после прав:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>а также ls покажет эту директорию по другому. Так вот, теперь вернём файл пользователя user4:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">user4</span> <span class="n">touch</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>и попытаемся удалить ещё раз:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>Как видите, теперь у меня недостаточно прав. Но, как владелец, я могу удалять свои файлы:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="n">file3</span>
+</pre></div>
+</div>
+<p>А владелец директории, не важно, root он или нет, может удалять все файлы. В системе есть директория /tmp:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">tmp</span>
+</pre></div>
+</div>
+<p>различные программы в процессе работы могут создавать здесь временные файлы. И чтобы другие процессы не удалили эти файлы здесь стоит sticky bit.</p>
+<p><img alt="" src="../../_images/passwd2.png"/></p>
+<p>Есть ещё пара специальных атрибутов – setuid и setgid. Вкратце – они позволяют запускать файл от имени владельца или группы соответственно. Прекрасный пример – программа passwd:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+</div>
+<p>Как видите, вместо x у владельца стоит s – это означает что здесь есть атрибут setuid, плюс ls ярким красным выделяет этот файл. Мы знаем, что passwd меняет пароль пользователя. Пользователь запускает программу passwd, вводит пароль, программа хэширует пароль и записывает в /etc/shadow. Но ведь у обычного пользователя нет прав редактировать файл /etc/shadow. И процесс passwd, запущенный от имени обычного пользователя, просто не смог бы редактировать этот файл – а значит пароль не поменялся бы. Поэтому здесь стоит setuid – когда мы запускаем программу passwd, процесс запускается не от имени нашего пользователя:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">passwd</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">passwd</span>
+</pre></div>
+</div>
+<p>а от имени владельца этого файла - root-а. А вот процесс, запущенный от рута, может редактировать всё что угодно. Если бы владельцем файла являлся user4, то программа запускалась бы от имени пользователя user4. Вот, собственно, для этого и есть setuid.</p>
+<p><img alt="" src="../../_images/setuid.png"/></p>
+<p>setgid делает примерно тоже самое, но уже от имени группы этого файла. Задаётся setuid, как и sticky bit – с помощью букв или чисел – u+s для setuid и g+s для setgid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">s</span> <span class="n">file</span>
+<span class="n">chmod</span> <span class="n">g</span><span class="o">+</span><span class="n">s</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>Ну и цифрами setuid это 4, setgid это 2 – всё как в правах. Допустим, чтобы поставить setuid и setgid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">6770</span> <span class="n">file</span>
+</pre></div>
+</div>
+<p>setuid, как и sudo, позволяет повысить привилегии пользователю, а значит это потенциальная брешь в безопасности. Используя программы, где стоит этот атрибут – можно попытаться стать рутом, как я показывал это с sudo. Поэтому использовать setuid вообще нежелательно и он используется только в крайних случаях, как например с passwd.</p>
+<p><img alt="" src="../../_images/file4.png"/></p>
+<p>Также, у setgid есть одно особое применение. Если использовать setgid на директорию, то все файлы, создаваемые в этой директории, будут создаваться от имени группы, владеющей этой директорией. Обычно, когда вы создаёте какой-то файл, то владельцем являетесь вы, а группой – ваша основная группа. Это можно увидеть в той shared директории. Смотрите, user создал файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file4</span>
+<span class="n">ll</span> <span class="n">file4</span>
+</pre></div>
+</div>
+<p>и у него группа user, потому что это его user private group, о котором мы говорили в прошлый раз. Пользователь user4 не входит в группу и не является пользователем user, а значит он для этого файла относится к others. Я не хочу, чтобы все пользователи в системе видели этот файл, поэтому меняю права на 660:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">660</span> <span class="n">file4</span>
+</pre></div>
+</div>
+<p>но хочу, чтобы у пользователей в группе group1 был доступ к этому файлу:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chgrp</span> <span class="n">group1</span> <span class="n">file4</span>
+<span class="n">ll</span> <span class="n">file4</span>
+</pre></div>
+</div>
+<p>А так как пользователь user4 тоже в этой группе, он сможет редактировать этот файл.</p>
+<p><img alt="" src="../../_images/setgid.png"/></p>
+<p>Но если я создам ещё один файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file5</span>
+<span class="n">ll</span> <span class="n">file5</span>
+</pre></div>
+</div>
+<p>мне придётся опять менять группу для нового файла. Учитывая, что это общая директория, она специально создана для того, чтобы тут несколько пользователей из одной группы работали с файлами, было бы легче, если б все новые файлы создавались с группой group1. И вот для этого можно использовать setguid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="n">g</span><span class="o">+</span><span class="n">s</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+<span class="n">ll</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">shared</span>
+</pre></div>
+</div>
+<p>Как видите, для группы теперь стоит setgid. И теперь, когда я создаю новый файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file6</span>
+<span class="n">ll</span> <span class="n">file6</span>
+</pre></div>
+</div>
+<p>он автоматом создаётся с этой группой, а не моей основной группой. Все новые файлы в этой директории, независимо от пользователя, будут принадлежать группе group1, благодаря чему пользователям не придётся постоянно менять группу файла, чтобы все могли работать с этими файлами.</p>
+<p><img alt="" src="../../_images/umask.png"/></p>
+<p>Ещё один момент – как вы, возможно, заметили, все файлы, которые я создаю, имеют одни и те же стандартные права – 664. Дефолтные права на новые файлы задаются утилитой umask. Если просто запустить umask, можно увидеть 0002. Можно ещё запустить:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">umask</span> <span class="o">-</span><span class="n">S</span>
+</pre></div>
+</div>
+<p>чтобы было понятнее. И так, первая цифра – для sticky bit, setuid и setgid, остальное для прав. Идея такая – берём максимальное значение – это 777 для директорий и 666 для файлов - и отнимаем те дефолтные права, которые мы хотели бы. Допустим, если мы хотим, чтобы у всех новых файлов были права 664, мы от 666 отнимает 664 – получаем 002. Вот у нас 002 и стоит. Ну и если от 777 отнять 002 получим 775.</p>
+<p>Вы скажете – для файлов же максимальные права тоже 777. Но вот просто нельзя создавать новые файлы с правами execute, это большая угроза безопасности. Поэтому для файлов дефолтные максимальные права это 666. А с директориями без execute нормально не поработаешь, поэтому для них 777. Если я хочу, чтобы файлы создавались с правами 660, то я от 666 отнимаю 660 – получаю 006. Но если от 777 отнять 006 получится 771, 1 в конце выглядит бессмысленно, поэтому лучше использовать 007 – тогда права для директорий будут 770, а для файлов 660.</p>
+<p><img alt="" src="../../_images/umask7.png"/></p>
+<p>И так, как мне это применить? Я могу это сделать в текущей сессии – написать umask 007, и убедиться, создав новый файл и директорию:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">file8</span>
+<span class="n">mkdir</span> <span class="n">dir8</span>
+<span class="n">ll</span> <span class="n">file8</span>
+<span class="n">ll</span> <span class="o">-</span><span class="n">d</span> <span class="n">dir8</span>
+</pre></div>
+</div>
+<p>Как видите, теперь у новых файлов для остальных пользователей нет никаких прав. Если же мы хотим, чтобы этот umask действовал для нашего пользователя всегда, мы добавляем строчку:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">umask</span> <span class="mi">007</span>
+</pre></div>
+</div>
+<p>в ~/.bash_profile или ~/.bashrc. Если помните, login shell у нас все равно считывает ~/.bashrc, а вот если задействуется non login shell, то он не прочтёт bash_profile, поэтому в некоторых случаях лучше писать в ~/.bashrc. Ну и если мы говорим про всех пользователей, то используйте файлы /etc/profile и /etc/bashrc.</p>
+<p>Стандартные права делят пользователей на владельца, группу и остальных, что в большинстве случаев достаточно, но иногда всё же нет. Что, если мы хотим дать права на файл всем в группе, кроме двух её участников? Ради этого придётся создавать отдельную группу без этих двух участников. Или, допустим, нужно дать права на 3 группы, а не одну, при этом, дать какому-то пользователю больше прав, какому-то меньше. Для этого можно использовать список контроля доступа – acl. В общем-то речь про две команды:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getfacl</span>
+<span class="n">setfacl</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/acl.png"/></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getfacl</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>показывает текущие права на файл. Как видим, владельцу user и группе group1 можно читать и изменять этот файл. User4 тоже в группе group1, но я хочу запретить ему изменять этот файл – для этого я использую утилиту setfacl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">user4</span><span class="p">:</span><span class="n">r</span><span class="o">--</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>Команда говорит, что нужно модифицировать(-m) права для пользователя user4 и выставить их такими-то. Давайте ещё позволим группе wheel иметь полный доступ на файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">g</span><span class="p">:</span><span class="n">wheel</span><span class="p">:</span><span class="n">rwx</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>После выставления acl ls показывает рядом с правами значок +, а с помощью:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getfacl</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>узнаем текущие права на файл.  Теперь user4 не может редактировать этот файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">user4</span> <span class="n">nano</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>Чтобы удалить дополнительные права используем ключ -b:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">b</span> <span class="n">file8</span>
+<span class="n">getfacl</span> <span class="n">file8</span>
+</pre></div>
+</div>
+<p>Возможно, тему ACL я еще затрону отдельно, но вкратце этого достаточно.</p>
+<p><img alt="" src="../../_images/shadow1.png"/></p>
+<p>Ну и напоследок, есть интересный пример с файлом /etc/shadow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ll</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span>
+</pre></div>
+</div>
+<p>Как вы видите, на этот файл никаких прав нет, даже у его владельца – root-а. Но при этом мы знаем, что при смене пароля с passwd новый пароль прописывается в этом файле, да и если открыть этот файл с nano – то мы можем читать и изменять этот файл.</p>
+<p><img alt="" src="../../_images/dac.png"/></p>
+<p>Суть в том, что все позволения работы с файлом проверяет ядро операционной системы – оно проверяет, соответствует ли uid пользователя, обращающегося к файлу, с uid-ом владельца файла на файловой системе, есть ли пользователь в группе и т.п. И при некоторых условиях – когда к файлу обращается залогиненный root, в том числе при выполнении команды passwd, ядро просто пропускает проверку и сразу даёт доступ к файлу:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">capabilities</span>
+<span class="o">/</span><span class="n">DAC_OVERRIDE</span>
+</pre></div>
+</div>
+<p>А вот для каких-нибудь сервисов, которые работают от имени рута, но запущены, допустим, при включении системы, а не вручную, этот файл недоступен для чтения. А при работе root может просто игнорировать все права на файлы.</p>
+<p>Подводя итоги, мы с вами разобрали стандартные права – read, write и execute, команды chown, chgrp и chmod для смены прав и владельцев файлов, атрибуты sticky bit, setuid и setgid, права по умолчанию – umask, дополнительные права – acl. Администраторы всегда что-то делают с правами, тема хоть и простая, но может иметь много всяких нюансов, которые можно встреть при работе. Также для лучшего понимания советую почитать <a class="reference external" href="https://habr.com/ru/post/469667/">статью</a> по ссылке.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

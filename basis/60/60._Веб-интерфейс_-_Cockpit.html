@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>60. Веб-интерфейс - Cockpit — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/60/basis.gnulinux.pro/basis/60/60._%D0%92%D0%B5%D0%B1-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_-_Cockpit.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="../61/61._Глоббинг_и_регулярные_выражения.html" rel="next" title="61. Глоббинг и регулярные выражения"/>
+<link href="../59/59._Автоматическое_монтирование_-_Autofs.html" rel="prev" title="59. Автоматическое монтирование - Autofs"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="60._Веб-интерфейс_-_Cockpit.html#">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">60. Веб-интерфейс - Cockpit</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="cockpit">
+<h1>60. Веб-интерфейс - Cockpit<a class="headerlink" href="60._Веб-интерфейс_-_Cockpit.html#cockpit" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/T63DvzUY-7w" title="YouTube video player" width="560"></iframe>
+<p><img alt="" src="../../_images/project.png"/></p>
+<p>Как мы говорили, на серверах обычно не ставят графический интерфейс, так как всё можно сделать через командную строку. А графический интерфейс тянет за собой кучу пакетов, которые могут иметь уязвимости, ну и впустую использует ресурсы. Да и сервера стоят не на локальных машинах, т.е. если мы хотим графический интерфейс, нужно удалённо подключаться через какие-нибудь протоколы, к примеру, VNC. Но при задержках в сети подключение начинает подвисать, изображение задерживается и всё такое, что довольно неприятно.</p>
+<p>Многие программы, используемые администраторами в компаниях, имеют веб-интерфейс - к примеру, гипервизоры, антивирусы, файрволы и т.д. и т.п. Веб-интерфейс лучше справляется с задержками в сети, не так сильно грузит сервер и имеет меньше зависимостей. Раньше как было - к примеру, для управления гипервизором была только графическая утилита, написанная под Windows. И пользователям других систем приходилось постоянно подключаться к какой-нибудь виртуалке с графическим интерфейсом, где стоит этот софт. К счастью, сейчас почти всем можно управлять через веб интерфейс.</p>
+<p>Не исключение и Linux. Есть множество различных проектов, которые дают интерфейс и могут упростить настройку различных сервисов. Обычно это независимые проекты, но есть и исключение - проект <a class="reference external" href="https://cockpit-project.org">Cockpit</a>, который спонсируется и поддерживается компанией Red Hat.</p>
+<p><img alt="" src="../../_images/distros.png"/></p>
+<p>Хотя изначально Cockpit работал только на дистрибутивах RHEL, сейчас он работает на многих других, в том числе Убунту и Дебиан.</p>
+<p><img alt="" src="../../_images/banner.png"/></p>
+<p>Мы часто встречали это название, когда логинились через SSH или смотрели firewall:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="n">services</span>
+</pre></div>
+</div>
+<p>Да, cockpit был прописан наряду с ssh.</p>
+<p><img alt="" src="../../_images/enable2.png"/></p>
+<p>Сообщение при логине говорит о том, что сам cockpit установлен, нужно просто включить и запустить. Так и сделаем:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="o">--</span><span class="n">now</span> <span class="n">cockpit</span><span class="o">.</span><span class="n">socket</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что мы запускаем не сервис, а сокет. Это работает так - у нас на сервере работает сокет, который ждёт подключения. Если подключение есть - то systemd сам запускает сервис. Это позволяет сервису не работать постоянно, что немного облегчает нагрузку на сервер. Хотя cockpit использует довольно мало ресурсов.</p>
+<p>Теперь, при подключении по ssh, мы будем видеть подсказку, как подключиться к веб-интерфейсу - https, ip адрес и порт 9090. Можем ещё убедиться, что у сервиса на файрволе тот же порт:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">info</span><span class="o">-</span><span class="n">service</span><span class="o">=</span><span class="n">cockpit</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/ssl.png"/></p>
+<p>Скопируем ссылку и перейдём по ней в браузере. Сразу после этого вы увидите окно с предупреждением об угрозе безопасности. На самом деле угрозы нет, но, давайте объясню в чём дело.</p>
+<p>Есть так называемые центры сертификации. Что-то наподобии гос. органа, выдающего паспорта. Администраторы могут обращаться к ним, чтобы запросить «паспорт» для своего сайта. Эти паспорта - SSL сертификаты. И у каждого паспорта есть специальная метка, уникальная для центра сертификации. Подделать такую метку нельзя. Так вот, браузеры доверяют центрам сертификации и следят, чтобы на сертификатах была метка, соответствующая одному из центров. Если на паспорте метка не такая или истёк срок действия паспорта и т.п., то браузер перестаёт доверять сайту и выдаёт такую ошибку. Так как это очень похоже на то, что кто-то выдаёт себя за другого.</p>
+<p>В локальной сети нет необходимости обращаться к центру сертификации, можно построить свой, что обычно и делают в компаниях. Это позволяет пользователям компании заходить на внутренние сайты без всяких ошибок. Но даже если нет своего центра сертификации, в нашем случае нет ничего страшного, мы уверены, что подключаемся именно к нашей виртуалке, поэтому можем проигнорировать ошибку. Нажимаем «Дополнительно», а затем «Принять риск и продолжить».</p>
+<p><img alt="" src="../../_images/login.png"/></p>
+<p>После чего нас встретит окно логина. Здесь мы можем указать пользователя из нашей системы, скажем, рута или нашего user-а.</p>
+<p><img alt="" src="../../_images/dashboard.png"/></p>
+<p>После логина нас встретит окно с общей информацией о системе. Так как у меня браузер на русском, то и интерфейс отображается на русском, что немного не привычно. Поэтому справа сверху можно ткнуть на иконку пользователя и сменить язык интерфейса.</p>
+<p><img alt="" src="../../_images/overview.png"/></p>
+<p>Интерфейс довольно простой и понятный. Я не буду тыкать на все все все кнопки, многое и так понятно, но, давайте пройдёмся по вкладкам. И так, Overview - общая информация о системе. Здесь мы видим, что доступны обновления безопасности, видим нагрузку на процессор, оперативку. Если бы у нас была физическая машина, мы бы видели модель и информацию о ней. Ну и различные настройки, такие как хостнейм, время, профиль производительности, домен и т.д. и т.п. Давайте нажмём на «View details and history» под «Usage».</p>
+<p><img alt="" src="../../_images/metrics.png"/></p>
+<p>Откроется чуть детальная информация, включая сервисы, использующие CPU и оперативку, swap, использование файловых систем, использование сети и т.п. Вся эта информация о текущем использовании ресурсов называется метриками. Снизу у нас также есть предлолжение установить cockpit-pcp - пакет, который позволит сохранять эти метрики на время, визуализировать их и т.п. Давайте нажмём на кнопку «Install».</p>
+<p><img alt="" src="../../_images/installpcp.png"/></p>
+<p>Откроется окно, в котором покажутся необходимые для установки пакеты и их общий объём. Опять нажмём Install.</p>
+<p><img alt="" src="../../_images/relogin.png"/></p>
+<p>После установки нас просят перелогиниться, чтобы увидеть изменения.</p>
+<p><img alt="" src="../../_images/nometrics.png"/></p>
+<p>После чего нам говорят, что нет истории метрик, и спрашивают - а работает ли сервис pmlogger? И снизу кнопка troubleshoot. Давайте нажмём.</p>
+<p><img alt="" src="../../_images/pmlogger.png"/></p>
+<p><img alt="" src="../../_images/pmlogger2.png"/></p>
+<p>Нас перекидывает во вкладку сервиса. Как видите, статус сервиса disabled. Т.е. как обычно, после установки надо включить и запустить сервис. Здесь это можно сделать нажав на ползунок.</p>
+<p><img alt="" src="../../_images/nodata.png"/></p>
+<p>Теперь вернёмся в окно с метриками и обновим его. На этот раз мы просто видим, что нет информации. Сервис просто должен набрать достаточно информации. Оставим его включённым, чтобы в будущем можно было посмотреть метрики за сегодняшний и предыдущие дни.</p>
+<p><img alt="" src="../../_images/logs1.png"/></p>
+<p>Во вкладке Logs, соответственно, логи. Можно их фильтровать, выбирая время, важность и прочие параметры. Ну и нажимая на лог можно увидеть больше деталей о нём.</p>
+<p><img alt="" src="../../_images/network.png"/></p>
+<p>Во вкладке Networking у нас нагрузка сети, логи, а также настройки файрвола и интерфейсов.</p>
+<p><img alt="" src="../../_images/firewall3.png"/></p>
+<p>В том же самом файрволе можно добавить или удалить сервисы и зоны. Ну и всё это наглядно и просто.</p>
+<p><img alt="" src="../../_images/accounts.png"/></p>
+<p>Во вкладке Accounts обычные пользователи. Отсюда же можно их создавать или изменять.</p>
+<p><img alt="" src="../../_images/edituser.png"/></p>
+<p>Скажем, можно давать или отнимать административный доступ, блокировать аккаунты, менять пароли и даже добавлять публичные ssh ключи, чтобы пользователь мог по ssh ключам логиниться.</p>
+<p><img alt="" src="../../_images/services.png"/></p>
+<p>Ну и во вкладке Services можно смотреть информацию и управлять сервисами, скажем, включать, выключать, перезапускать и т.п.</p>
+<p><img alt="" src="../../_images/apps.png"/></p>
+<p>Функционал Cockpit можно расширять модулями. Скажем, есть модули, которые могут управлять виртуалками, контейнерами, файловыми шарами, селинуксом и т.п. На <a class="reference external" href="https://cockpit-project.org/applications">сайте проекта</a> есть список известных модулей.</p>
+<p><img alt="" src="../../_images/dnfsearch.png"/></p>
+<p>Некоторые модули можно найти в репозиториях и установить:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">search</span> <span class="n">cockpit</span><span class="o">-</span>
+</pre></div>
+</div>
+<p>Ну и любой желающий может разработать свои модули.</p>
+<p><img alt="" src="../../_images/selinux1.png"/></p>
+<p>Вернёмся ко вкладкам. Один из модулей - SElinux - позволяет увидеть наши модификации, посмотреть ошибки и даже предложить решения проблем.</p>
+<p><img alt="" src="../../_images/updates.png"/></p>
+<p>Во вкладке Software Updates мы можем посмотреть доступные обновления, их важность и выбрать что необходимо обновить - только обновления безопасности или все пакеты.</p>
+<p><img alt="" src="../../_images/subs.png"/></p>
+<p>Во вкладке Subscription можно зарегистрировать RHEL или посмотреть статус подписки, время, когда закончится подписка и прочую информацию.</p>
+<p><img alt="" src="../../_images/term.png"/></p>
+<p>Ну и вкладка Terminal позволяет запускать команды прямо из браузера. Это не так удобно, как работать с терминалом напрямую, так как некоторые горячие клавиши перехватываются браузером, но для простых задач вполне хороший вариант.</p>
+<p><img alt="" src="../../_images/addhost.png"/></p>
+<p>В один Cockpit можно подключить несколько хостов для мониторинга и управления. Чтобы добавить новый хост, нажмите в левом верхнем углу на выпадающее меню и нажмите «Add new host».</p>
+<p><img alt="" src="../../_images/centos1.png"/></p>
+<p>Давайте пропишем здесь наш Centos, укажем IP адрес и логин пользователя, после чего нажмём Add.</p>
+<p><img alt="" src="../../_images/adderror.png"/></p>
+<p>Но мы видим ошибку - не удаётся связаться с хостом. Cockpit пытается подключиться к хосту по ssh. На Centos-е мы меняли порт ssh на 2233.</p>
+<p><img alt="" src="../../_images/centos2.png"/></p>
+<p>Давайте попробуем заново добавить, указав при этом нужный порт.</p>
+<p><img alt="" src="../../_images/centosssh.png"/></p>
+<p>Теперь мы видим сообщение с ключом хоста. Да, мы уверены, что подключаемся к тому самому хосту.</p>
+<p><img alt="" src="../../_images/logincentos.png"/></p>
+<p>Потом у нас спросят пароль и предложат создать ssh ключ, чтобы user с хоста rhel мог без пароля подключаться к user-у c хоста centos.</p>
+<p><img alt="" src="../../_images/hosts2.png"/></p>
+<p>Теперь у нас в левом меню два хоста и мы можем выбирать, каким хотим управлять.</p>
+<p><img alt="" src="../../_images/centoscockpit.png"/></p>
+<p>При этом на самом Centos Cockpit не запущен, RHEL лишь управляет Centos через SSH.</p>
+<p><img alt="" src="../../_images/storage.png"/></p>
+<p>На Centos-е внешний вид и некоторые вкладки могут отличаться. К примеру, здесь у нас стоит пакет cockpit-storaged, который позволяет управлять дисками, рейдом, lvm, nfs и прочим. Т.е. у вас могут быть хосты, на которых нужна виртуализация - для них ставите одни модули. На других хостах контейнеры - ставите другие. И, соответственно, на каждом хосте вы будете видеть и управлять тем, что вам нужно.</p>
+<p>Говоря в целом о вкладках, о различном функционале Cockpit, всё это вам должно быть знакомо, потому что мы всё это разбирали. Зная, как это работает на самом деле, что делает каждая из этих кнопок, вы понимаете процесс - что, в каком порядке и зачем делать. Cockpit лишь веб-админка, которая оборачивает часто используемые простые задачи в красивый и простой интерфейс. Он, конечно, не замена командной строке, но некоторые вещи здесь смотреть и настраивать удобнее.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

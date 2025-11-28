@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>44. Удалённый доступ - SSH — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/44/basis.gnulinux.pro/basis/44/44._%D0%A3%D0%B4%D0%B0%D0%BB%D1%91%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF_-_SSH.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="44._Практика.html" rel="next" title="Практика"/>
+<link href="../43/43._Практика.html" rel="prev" title="Практика"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="44._Удалённый_доступ_-_SSH.html#">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../64/64._Про_сертификацию_RHCSA.html">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">44. Удалённый доступ - SSH</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="ssh">
+<h1>44. Удалённый доступ - SSH<a class="headerlink" href="44._Удалённый_доступ_-_SSH.html#ssh" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/1VXUxD4oWdU" title="YouTube video player" width="560"></iframe>
+<p>Мы с вами долгое время работаем через консоль виртуальной машины. В ней отображается графический интерфейс, но не то чтобы он сильно нужен - практически всё мы делаем через командную строку. Да, половину задач мы могли бы делать через графику, но вспомните скрипты и планировщики. Графический интерфейс программы автоматизировать очень сложно, а вот с текстовым можно сделать всё что угодно. Тогда нужен ли нам вообще графический интерфейс? Для рабочих задач можно обойтись и без него. Большинство серверов и виртуальных машин работает без графического интерфейса, чтобы не тратить ресурсы на оболочку и кучу программ, которые приходят вместе с ней. От этого и другой плюс, меньше программ - меньше уязвимостей.</p>
+<p>Без графического интерфейса консоль виртуальной машины будет показывать виртуальный терминал. С ним зачастую неудобно работать - нельзя выделить и копировать текст, невозможно автоматизировать и всё такое. Однако консоль всё же иногда используют - при установке операционной системы, при начальной настройке сети и каких-то проблемах, когда сеть недоступна.</p>
+<p>Но вот наличие сети позволяет администраторам через свой графический интерфейс подключаться к текстовому интерфейсу Linux-а и работать с командами ровно также, как мы это делали через эмулятор терминала. Это называется удалённым доступом. Чтобы это работало, используется сетевой протокол под названием SSH - secure shell - безопасная оболочка. SSH состоит из клиента и сервера.</p>
+<p><img alt="" src="../../_images/sshd.png"/></p>
+<p>На сервере, куда вы подключаетесь, должен работать демон sshd:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">status</span> <span class="n">sshd</span>
+</pre></div>
+</div>
+<p>По-умолчанию, он использует 22 порт и работает с TCP. На Centos он устанавливается и включается ещё при установке системы, а на некоторых дистрибутивах его нужно устанавливать вручную.</p>
+<p><img alt="" src="../../_images/ssh127.png"/></p>
+<p>Для удалённого подключения есть множество программ. Начнём с самой простой - утилита ssh, она есть практически везде. Попробуем подключиться сами к себе. Для этого нужно знать IP адрес. Но мы помним, что каждый компьютер может обращаться к себе с помощью адреса 127.0.0.1 - этот адрес и используем. Также нужно указать пользователя, к которому мы подключаемся, например, к root-у:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="o">@</span><span class="mf">127.0.0.1</span>
+</pre></div>
+</div>
+<p>Собачка разделяет имя пользователя и IP адрес. При первом подключении вы увидите предупреждение, что ssh клиент не смог распознать сервер и спрашивает нас, стоит ли подключаться к нему?</p>
+<p><img alt="" src="../../_images/mitm.png"/></p>
+<p>Дело в том, что сеть зачастую работает через десятки роутеров и свитчей. Особенно, если это в интернете, наше соединение проходит через оборудование незнакомых компаний. И если вы не соединены к серверу напрямую, а подключаетесь удалённо, есть шанс, что какой-то взломщик встанет посереди вашего трафика и сможет его видеть и даже вмешиваться. Такая атака называется man in the middle - человек посередине. Технически это возможно, поэтому многие сетевые протоколы, включая SSH, имеют встроенные механизмы защиты.</p>
+<p>Например, у ssh сервера есть специальные ключи, что-то вроде удостоверения личности. И у каждого ключа есть отпечаток, что-то вроде серийного номера. Когда мы первый раз подключаемся к серверу, ssh клиент запоминает отпечаток ключа. И если завтра кто-то встанет посереди трафика и подставит свой ключ, то ssh клиент выдаст предупреждение, что этот ключ не соответствует тому, что мы сохранили. Злоумышленник, конечно, может обмануть нас, показав нам этот же ключ, но ключ, который мы видим - лишь один из двух. Мы видим лишь ключ, называемый публичным. А он не имеет смысла без второго, который хранится только на сервере и называется приватным. Но в целом, это большая тема и давайте её пока оставим. Если вам интересно, можете посмотреть по <a class="reference external" href="https://youtu.be/POjcECePqzY">ссылке</a>. Кроме распознавания  нужного сервера, ssh ещё шифрует соединение между клиентом и сервером, благодаря чему злоумышленник не увидит команды, которые вы вводите, и в целом трафик, который проходит через SSH.</p>
+<p><img alt="" src="../../_images/ssh127.png"/></p>
+<p>Поэтому вводим yes, после чего ssh спрашивает пароль пользователя, к которому мы подключаемся. Вводим пароль и попадаем в оболочку этого пользователя - root-а. А дальше  всё как обычно, как мы всегда и работали, это полноценный bash со всеми командами.</p>
+<p><img alt="" src="../../_images/sshfromme.png"/></p>
+<p>Для наглядности, давайте я подключусь со своего компьютера на виртуалку. В прошлый раз мы дали ей IP - 192.168.31.5:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">user</span><span class="o">@</span><span class="mf">192.168.31.5</span>
+<span class="n">ip</span> <span class="n">a</span> <span class="n">show</span> <span class="n">enp0s3</span>
+</pre></div>
+</div>
+<p>Как видите, соединение прошло успешно и теперь по началу строки, где указан пользователь и имя компьютера, можно различать, где мой компьютер, а где виртуалка. Чтобы выйти из ssh сессии, достаточно написать exit, logout или нажать Ctrl+D.</p>
+<p><img alt="" src="../../_images/cmdssh.png"/></p>
+<p>Если у вас основной системой является Windows, то тут несколько вариантов. Пару лет назад в Windows 10 добавили ssh клиент. Работает он почти также, как и на Linux. Предварительно следует запустить программу cmd.exe, которая является текстовым интерфейсом для Windows. И в нём можно запустить ssh:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">user</span><span class="o">@</span><span class="mf">192.168.31.227</span>
+</pre></div>
+</div>
+<p>Такой вариант подойдёт для небольших задач - функционала немного, но ничего не нужно доустанавливать.</p>
+<p><img alt="" src="../../_images/putty1.png"/></p>
+<p>Одна из самых популярных программ - PuTTY. Функционала здесь побольше и её в основном используют администраторы, которым иногда нужно поработать с командной строкой. А также этой программой нередко пользуются для прямого подключения к сетевому оборудованию, например, к свитчам, через специальный порт. Программа весит очень мало, её легко скачать и в целом подойдёт для нечастых задач.</p>
+<p><img alt="" src="../../_images/mobaxterm.png"/></p>
+<p>А администраторы, которые постоянно подключаются к большому количеству серверов, которым нужно много различных протоколов и более глубокий функционал, используют продвинутые инструменты, например, SecureCRT или MobaXterm.</p>
+<p><img alt="" src="../../_images/mobaxtermx11.png"/></p>
+<p>Например, ssh позволяет передавать файлы между компьютерами, что удобно реализовано в MobaXterm. Также графическая подсистема в Linux-ах позволяет запускать приложения удалённо, через ssh. Например, я могу запустить программу с графическим интерфейсом на виртуалке без графики, при этом окно будет отображаться на стороне клиента ssh, т.е. на Windows, а сама программа работать на сервере. Это называется проброс графики. Чтобы это работало на Windows через PuTTY, нужно установить дополнительную программу, а в MobaXterm это уже встроено.</p>
+<p><img alt="" src="../../_images/x11fromlin.png"/></p>
+<p>Для проброса графики на стороне сервера не нужна графика, достаточно пакета xauth. Если у вас основная система GNU/Linux, то никаких дополнительных программ не надо, достаточно при подключении использовать ключ -X:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">X</span> <span class="n">root</span><span class="o">@</span><span class="mf">192.168.31.5</span>
+<span class="n">gnome</span><span class="o">-</span><span class="n">disks</span>
+</pre></div>
+</div>
+<p>Обычно, Linux серверов много - в компаниях могут быть десятки, сотни и тысячи Linux машин. И администраторы через свой комп или с помощью скриптов и программ управляют всеми этими компьютерами. Но пароли для такого не подходят - вам либо нужно будет на всех компьютерах держать один и тот же пароль, что очень плохая идея, либо для каждого компьютера отдельный пароль - что хорошо, но сложно. Да, вам нужно хранить пароли в парольных менеджерах, но многим программам и скриптам неудобно работать с паролями. Поэтому есть другой способ аутентификации - с помощью ключей.</p>
+<p>Я до этого говорил о ключах в SSH, но то были ключи хоста - они нужны для безопасности, чтобы распознать нужный сервер. У SSH также есть понятие пользовательских ключей, которые можно использовать вместо пароля. Работает это так: у администратора есть два ключа - приватный и публичный. Админ закидывает публичный ключ на сервера, в домашнюю директорию пользователей, к которым будет подключаться. И при следующем подключении демон ssh увидит наличие подходящего ключа у пользователя и аутентифицирует его. Попробуем это реализовать.</p>
+<p><img alt="" src="../../_images/ssh-keygen.png"/></p>
+<p>Для начала нужно сгенерировать ключи, это делается на стороне клиента, т.е. у администратора. Для генерации ключей используется команда ssh-keygen. По умолчанию ключи и в целом настройки клиента ssh хранятся в домашней директории пользователя, в скрытой директории <code class="docutils literal notranslate"><span class="pre">.ssh</span></code>. А ключи, по умолчанию, называются <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code>. По хорошему, когда у нас много серверов, мы можем создать различные ключи и для подключения к разным серверам использовать разные ключи. Тут нажмём enter, чтобы использовать название по умолчанию. Дальше у нас спрашивается пароль для ключа. Так как ssh ключи позволяют заходить на сервера без пароля, они могут быть очень опасны, если попадут в руки злоумышленникам. Поэтому мы можем защитить приватные ключи паролем. При использовании ключа нам нужно будет вводить пароль от ключа, но, если у нас украдут этот ключ, без пароля хакеры ничего не сделают. Для нашего примера мы не будем использовать пароль, чтобы было нагляднее. Поэтому нажимаем два раза Enter и ключ создаётся. Мы видим, что создались два файла - <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code> и <code class="docutils literal notranslate"><span class="pre">id_rsa.pub</span></code> - приватный и публичный ключ соответственно. Также внизу есть эдакая картинка, визуализирующая ключ. На самом деле это больше нужно для ключей хоста - вы можете настроить так, чтобы при подключении к серверам вы видели ключ хоста в таком виде. Если вдруг ключ хоста изменится или кто-то встанет посреди трафика, ключ будет другой и визуально вы сразу заметите разницу.</p>
+<p><img alt="" src="../../_images/sshcopyid.png"/></p>
+<p>У нас есть ключи, теперь мы можем закинуть наш публичный ключ на какой-нибудь сервер и проверить. Используем эту же виртуалку и пользователя root. Самый простой способ закинуть ключ - команда ssh-copy-id:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="nb">id</span> <span class="n">root</span><span class="o">@</span><span class="mf">127.0.0.1</span>
+</pre></div>
+</div>
+<p>Если не использовать никакие опции, она найдёт дефолтный ключ id_rsa.pub и закинет его. При этом, чтобы закинуть ключ, ssh подключается на этот сервер к пользователю, поэтому он попросит пароль пользователя. После чего добавит ключ и предложит нам проверить:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="o">@</span><span class="mf">127.0.0.1</span>
+</pre></div>
+</div>
+<p>На этот раз никакого пароля не потребовалось, мы можем аутентифицироваться по ключу.</p>
+<p><img alt="" src="../../_images/sshdir.png"/></p>
+<p>Посмотрим появившиеся файлы, для начала у клиента. В директории .ssh у нас 3 файла - два ключа и файл known_hosts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">~/.</span><span class="n">ssh</span>
+<span class="n">cat</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known</span><span class="o">.</span><span class="n">hosts</span>
+</pre></div>
+</div>
+<p>Ключи представляют из себя текстовые файлы с непонятным набором символов. А в файле known_hosts указаны адреса, к которым мы подключались, а также отпечатки их ключей. Именно по этому файлу наш клиент будет понимать, изменились ли у сервера ключи или нет.</p>
+<p><img alt="" src="../../_images/sshdirsrv.png"/></p>
+<p>На сервере, в домашней директории пользователя, к которому я закинул ключ, также появилась директория .ssh с файлом authorized_keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="o">@</span><span class="mf">127.0.0.1</span>
+<span class="n">ls</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span>
+<span class="n">cat</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</pre></div>
+</div>
+<p>В этот файл будут попадать публичные ключи пользователей, т.е. это результат команды ssh-copy-id. На самом деле, хоть и не понятно в терминале, в этом файле сейчас одна строчка с одним ключом. Этот тот же id_rsa.pub. Если кто-то ещё добавит ключ, то он будет на второй строчке, т.е. один ключ - одна строчка.</p>
+<p><img alt="" src="../../_images/ssh_config.png"/></p>
+<p>На стороне клиента мы можем настроить подключения в файле <code class="docutils literal notranslate"><span class="pre">~/.ssh/config</span></code>. Например, можем дать подключению какое-нибудь понятное название, алиас, чтобы подключаться по нему, а не по ip адресу - <code class="docutils literal notranslate"><span class="pre">Host</span> <span class="pre">me</span></code>. После этого следует указать опцию <code class="docutils literal notranslate"><span class="pre">Hostname</span></code> с IP адресом, чтобы ssh знал, кто стоит за этим алиасом. Можем указать пользователя - <code class="docutils literal notranslate"><span class="pre">User</span></code> - чтобы не указывать его при каждом подключении. Если у нас несколько ключей, можем указать ключ, относящийся к этому хосту, чтобы не указывать его как опцию при подключении - <code class="docutils literal notranslate"><span class="pre">IdentityFile</span></code>. И добавим опцию <code class="docutils literal notranslate"><span class="pre">VisualHostKey</span> <span class="pre">yes</span></code>, чтобы при каждом подключении отображался ключ хоста.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">me</span>
+  <span class="n">Hostname</span> <span class="mf">127.0.0.1</span>
+  <span class="n">User</span> <span class="n">root</span>
+  <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+  <span class="n">VisualHostKey</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>Сохраним и выйдем.</p>
+<p><img alt="" src="../../_images/sshme.png"/></p>
+<p>При попытке подключения:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">me</span>
+</pre></div>
+</div>
+<p>мы увидим ошибку - Bad owner or permissions on /home/user/.ssh/config. Сейчас у файла config права 664, но для безопасности стоит выставить 644, чтобы никто из группы не смог изменить этот файл:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">644</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>Проверим ещё раз:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">me</span>
+</pre></div>
+</div>
+<p>Как видите, соединение прошло, при этом мы видим ключ хоста.</p>
+<p><img alt="" src="../../_images/man_ssh_config.png"/></p>
+<p>У ssh клиента есть множество опций:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">ssh_config</span>
+</pre></div>
+</div>
+<p>которые мы можем указывать как в командной строке при подключении, так и в конфиг файле <code class="docutils literal notranslate"><span class="pre">~/.ssh/config</span></code>. Если же мы хотим прописать общие настройки для всех пользователей, то можно использовать файл <code class="docutils literal notranslate"><span class="pre">/etc/ssh/ssh_config</span></code>.</p>
+<p><img alt="" src="../../_images/sshtouch.png"/></p>
+<p>ssh позволяет не только запускать оболочку, но и сразу выполнять команды и выводить результат:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">me</span> <span class="s1">'touch /root/sshtest; ls -l /root/sshtest'</span>
+</pre></div>
+</div>
+<p>Т.е. я, не заходя на сервер, создал на нём файл и посмотрел вывод. Это и позволяет вам управлять серверами с помощью различных программ и скриптов.</p>
+<p><img alt="" src="../../_images/sshd_config.png"/></p>
+<p>Хорошо, про работу и настройку клиента поговорили, теперь разберём ssh сервер. Основной конфиг файл - <code class="docutils literal notranslate"><span class="pre">/etc/ssh/sshd_config</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span>
+</pre></div>
+</div>
+<p>Здесь у нас множество опций, но пока разберём основные. Одна из главных настроек - <code class="docutils literal notranslate"><span class="pre">Port</span></code>. 22 порт - стандартный для ssh и огромное количество ботов в интернете постоянно ищут компьютеры с открытым 22 портом и пытаются подобрать пароль, чтобы взломать. Даже если у вас будет хороший пароль, теоретически, у ssh могут существовать уязвимости, с помощью которых можно получить доступ к серверу. Поэтому, если ваш Linux сервер будет доступен из интернета или из недоверенной сети, нужно менять стандартный порт на нестандартный, четырёх или пятизначный, чтобы отсеять большинство ботов. Но сразу предупрежу, что порт 2222 также имеет большую популярность, поэтому придумайте что-нибудь оригинальнее, например, 7563.  Но пока я менять не буду, потому что подсистема безопасности SElinux не даст это сделать простым способом. Да, чуть выше есть подсказка, как решить проблему с SELinux, но я всё равно отложу это дело, пока мы не разберём SElinux.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AddressFamily</span></code> - семейство адресов - обычно речь идёт о сетях ipv4 и ipv6. Вы часто будете встречать подобную опцию, и она позволяет ограничить демон, чтобы он работал только с IPv4, только с IPv6 или с обеими сетями, как в нашем случае.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ListenAddress</span></code> - говорит о том, на каких IP адресах будет работать этот демон. Если к серверу подключено несколько сетей, скажем, кабель от провайдера и локальная сеть, то мы можем настроить, чтобы SSH работал только на локальном IP адресе, т.е. тут указывается адрес этого сервера. В данном случае стоят нули - это означает, что сервер будет работать на всех своих адресах. А два двоеточия - тоже самое, но для IPv6 сетей.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HostKey</span></code> - указаны ключи хоста. Именно по ним мы и понимаем, на нужный ли сервер мы подключаемся.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PermitRootLogin</span></code> - говорит о том, разрешено ли пользователю root логиниться через ssh. Сейчас мы это можем, но так как пользователь root есть на всех серверах и многие боты пытаются подключиться именно им, в целях безопасности можно запретить пользователю root логиниться, либо разрешить это делать только с помощью пользовательских ключей - prohibit-password.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PubkeyAuthentication</span></code> - разрешить логиниться по публичным ключам. В большинстве случаев так и должно быть.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PasswordAuthentication</span></code> - разрешить логиниться по паролям. Для безопасности, чтобы никто не мог подобрать пароль, мы можем отключить эту опцию. Но, предварительно, стоит закинуть на сервер пользовательские ключи.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X11Forwarding</span></code> - именно за счёт этой опции мы можем пробрасывать графику, чтобы запускать графические приложения через тот же MobaXTerm. В целом, проброс графики негативно сказывается на безопасности клиента, так как у сервера появляется доступ к вашему компьютеру. К примеру,  если на вашем сервере какая-то заражённая программа, которую вы запускаете через X11Forwarding, то пока она работает, она может следить за буфером обмена, вводом клавиатуры и т.п., даже если вы вводите данные в не в самом проброшенном приложении, а где-то в другой программе. Поэтому, в целом, не стоит злоупотреблять пробросом графики, особенно на недоверенных серверах.</p></li>
+</ul>
+<p><img alt="" src="../../_images/sshd_user.png"/></p>
+<p>В самом низу конфига есть пример, как можно настроить определённые параметры для определённых пользователей, скажем, кому-то разрешить проброс графики, а кому-то нет. Или при подключении к ssh сразу выполнять какую-то программу, а не запускать bash.</p>
+<p><img alt="" src="../../_images/restartsshd.png"/></p>
+<p>После проделанных изменений следует перезапустить сервис:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">sshd</span>
+</pre></div>
+</div>
+<p>чтобы демон перечитал настройки.</p>
+<p>Подведём  итоги. Мы с вами научились работать с SSH - это и протокол, который позволяет удалённо подключаться к Linux серверам, и утилита, с помощью которой это реализуется. Но кроме утилиты ssh есть и другие SSH клиенты, тот же PuTTY и MobaXTerm. Мы поговорили про настройки клиента, проброс графики, пользовательские ключи и запуск команд через ssh. Также немного рассмотрели настройки демона - порт, адрес и аутентификацию. Хотя и на стороне клиента, и на стороне сервера можно настроить огромное количество опций, зачастую SSH готов к работе из коробки, разве что стоит поменять порт и использовать ключи, а также не использовать простые пароли. На пока этих знаний достаточно, но к настройке SSH мы ещё не раз вернёмся.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>

@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+
+<html class="writer-html5" data-content_root="../../" lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="1" name="readthedocs-addons-api-version"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>64. Про сертификацию RHCSA — Основы GNU/Linux и подготовка к RHCSA</title>
+<link href="../../_static/pygments.css%3Fv=b86133f3.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/css/theme.css%3Fv=e59714d7.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/general.css%3Fv=c0a7eb24.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/dark_mode_css/dark.css%3Fv=70edf1c7.css" rel="stylesheet" type="text/css"/>
+<link href="https://basis.gnulinux.pro/ru/latest/basis/64/basis.gnulinux.pro/basis/64/64._%D0%9F%D1%80%D0%BE_%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8E_RHCSA.html" rel="canonical"/>
+<script src="../../_static/jquery.js%3Fv=5d32c60e"></script>
+<script src="../../_static/_sphinx_javascript_frameworks_compat.js%3Fv=2cd50e6c"></script>
+<script src="../../_static/documentation_options.js%3Fv=fda52f4e"></script>
+<script src="../../_static/doctools.js%3Fv=9bcbadda"></script>
+<script src="../../_static/sphinx_highlight.js%3Fv=dc90522c"></script>
+<script src="../../_static/translations.js%3Fv=cd1d70c9"></script>
+<script src="../../_static/dark_mode_js/default_dark.js%3Fv=fd565c74"></script>
+<script src="../../_static/dark_mode_js/theme_switcher.js%3Fv=358d3910"></script>
+<script src="../../_static/js/theme.js"></script>
+<script src="../../_static/js/versions.js"></script>
+<link href="../../genindex.html" rel="index" title="Алфавитный указатель"/>
+<link href="../../search.html" rel="search" title="Поиск"/>
+<link href="../63/63._Практика.html" rel="prev" title="Практика"/>
+<body class="wy-body-for-nav">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../../basis.html">
+            BASIS
+              <img alt="Логотип" class="logo" src="../../_static/logo.png"/>
+</a>
+<div class="switch-menus">
+<div class="version-switch"></div>
+<div class="language-switch"></div>
+</div>
+<div role="search">
+<form action="../../search.html" class="wy-form" id="rtd-search-form" method="get">
+<input aria-label="Поиск в документации" name="q" placeholder="Поиск в документации" type="text"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+</div>
+</div><div aria-label="Меню навигации" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/commands.html">Команды</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../header/interview.html">Вопросы с собеседований</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Операционные_системы_и_GNU-Linux.html">01. Операционные системы и GNU-Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01/01._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Виртуализация.html">02. Виртуализация</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02/02._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Установка_AlmaLinux.html">03. Установка AlmaLinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03/03._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._О_файловых_системах.html">04. О файловых системах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04/04._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Текстовый_интерфейс_пользователя.html">05. Текстовый интерфейс пользователя</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05/05._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Пути_и_директории.html">06. Пути и директории</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06/06._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Создание_и_копирование_файлов.html">07. Создание и копирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07/07._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Перемещение,_переименование,_удаление._Жесткие_и_символические_ссылки.html">08. Перемещение, переименование, удаление. Жёсткие и символические ссылки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08/08._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Чтение_текстовых_файлов.html">09. Чтение текстовых файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09/09._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Текстовые_редакторы_nano_и_vi.html">10. Текстовые редакторы nano и vi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10/10._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Стандартные_потоки.html">11. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11/11._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._bash_№1:_bash-completion,_alias,_type.html">12. bash №1: bash-completion, alias, type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12/12._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._bash_№2:_переменные.html">13. bash №2: переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13/13._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Процессы_№1:_Информация_о_процессах_№1.html">14. Процессы №1: Информация о процессах №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14/14._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Процессы_№2:_Информация_о_процессах_№2.html">15. Процессы №2: Информация о процессах №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15/15._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Процессы_№3:_Работа_с_процессами.html">16. Процессы №3: Работа с процессами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16/16._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._su.html">17. su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17/17._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._sudo.html">18. sudo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18/18._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Пользователи.html">19. Пользователи</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19/19._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Права_на_файлы.html">20. Права на файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20/20._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Ядро_Linux.html">21. Ядро Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21/21._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Работа_с_дисками.html">22. Работа с дисками</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22/22._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Основы_файловых_систем.html">23. Основы файловых систем</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23/23._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Работа_с_файловыми_системами.html">24. Работа с файловыми системами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24/24._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Управление_логическими_томами_-_LVM.html">25. Управление логическими томами - LVM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25/25._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Программный_RAID_-_MD.html">26. Программный RAID - MD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26/26._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._bash_скрипты_№1.html">27. bash скрипты №1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27/27._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._bash_скрипты_№2.html">28. bash скрипты №2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28/28._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._bash_скрипты_№3.html">29. bash скрипты №3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29/29._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._bash_скрипты_№4.html">30. bash скрипты №4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30/30._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../31/31._bash_скрипты_№5.html">31. bash скрипты №5</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../32/32._bash_скрипты_№6.html">32. bash скрипты №6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Загрузчик_GRUB.html">33. Загрузчик GRUB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33/33._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Система_инициализации_-_systemd.html">34. Система инициализации - systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34/34._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Системный_менеджер_systemd.html">35. Системный менеджер systemd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35/35._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Логирование.html">36. Логирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36/36._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Планировщики_задач.html">37. Планировщики задач</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37/37._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Создание_backup_скрипта.html">38. Создание backup скрипта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38/38._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../39/39._Инкрементальные_бэкапы_с_tar.html">39. Инкрементальные бэкапы с tar</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../40/40._Дедупликация_с_VDO.html">40. Дедупликация с VDO</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../41/41._Создание_systemd_юнитов.html">41. Создание systemd юнитов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Основы_сетей.html">42. Основы сетей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../42/42._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Работа_с_сетью.html">43. Работа с сетью</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../43/43._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Удалённый_доступ_-_SSH.html">44. Удалённый доступ - SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../44/44._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../45/45._Принудительный_контроль_доступа_-_SElinux.html">45. Принудительный контроль доступа - SElinux</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../46/46._Межсетевой_экран_-_firewalld.html">46. Межсетевой экран - firewalld</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../47/47._Пакетный_менеджер_-_dnf.html">47. Пакетный менеджер - dnf</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Восстановление_доступа.html">48. Восстановление доступа</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../48/48._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../49/49._Виртуальная_память,_swap.html">49. Виртуальная память, swap</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../50/50._Планировщик_процессов.html">50. Планировщик процессов</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../51/51._Оптимизация_производительности_-_tuned.html">51. Оптимизация производительности - tuned</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../52/52._Управление_многоуровневым_хранилищем_-_stratis.html">52. Управление многоуровневым хранилищем - stratis</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../53/53._Установка_RHEL.html">53. Установка RHEL</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../54/54._Настройка_времени.html">54. Настройка времени</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../55/55._Работа_с_IPv6.html">55. Работа с IPv6</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../56/56._Передача_файлов_по_сети.html">56. Передача файлов по сети</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../57/57._Сетевые_файловые_системы_-_NFS.html">57. Сетевые файловые системы - NFS</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../58/58._Сетевые_файловые_системы_-_SMB.html">58. Сетевые файловые системы - SMB</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../59/59._Автоматическое_монтирование_-_Autofs.html">59. Автоматическое монтирование - Autofs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../60/60._Веб-интерфейс_-_Cockpit.html">60. Веб-интерфейс - Cockpit</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Глоббинг_и_регулярные_выражения.html">61. Глоббинг и регулярные выражения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../61/61._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Основы_контейнеризации.html">62. Основы контейнеризации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../62/62._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Работа_с_podman.html">63. Работа с podman</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../63/63._Практика.html"><em>Практика</em></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="64._Про_сертификацию_RHCSA.html#">64. Про сертификацию RHCSA</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift"><nav aria-label="Меню навигации для мобильных устройств" class="wy-nav-top">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../../basis.html">BASIS</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="Навигация по страницам" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a aria-label="Home" class="icon icon-home" href="../../basis.html"></a></li>
+<li class="breadcrumb-item active">64. Про сертификацию RHCSA</li>
+</ul>
+<hr/>
+</div>
+<div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+<div itemprop="articleBody">
+<section id="rhcsa">
+<h1>64. Про сертификацию RHCSA<a class="headerlink" href="64._Про_сертификацию_RHCSA.html#rhcsa" title="Ссылка на этот заголовок"></a></h1>
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/EPtSZgvxRqA" title="YouTube video player" width="560"></iframe>
+<p><img alt="" src="../../_images/rhcsa.png"/></p>
+<p>Хотя изначальная идея курса была в подготовке к сертификации по RHCSA, но ещё до первой темы я решил, что если уж и делать курс с простыми темами, то лучше сразу делать его для начинающих и затрагивать все основы работы с GNU/Linux. Ну а подготовка к экзамену осталась как путеводитель, как доказательство того, что этот курс привёл нас к каким-то ощутимым результатам. И что теперь у нас хватает знаний для получения сертификата, признанного во всём мире, показывающего, что мы можем администрировать Red Hat Enterprise Linux. Этих знаний хватит для начала работы младшим специалистом и они дадут фундамент для дальнейшего роста.</p>
+<p>Но на этом данный курс не закончится, я буду продолжать добавлять в него новые темы. Но и не думаю, что в принципе хоть как-то можно завершить курс, потому что тема основ бесконечная. Давайте лучше поговорим про сертификацию.</p>
+<p>Один из частозадаваемых вопросов:</p>
+<blockquote>
+<div><blockquote>
+<div><p>Нужна ли мне сертификация? Что она мне даст?</p>
+</div></blockquote>
+<p>Суть не в том, что вы пойдёте и сдадите экзамен. Вы этого можете не делать, это не так важно. Главное - подготовка к нему, получение знаний. Когда вы не знаете какую-то тему, скажем, как администрировать линукс, вам очень сложно понять, а что именно нужно изучать и какой уровень знаний считается достаточным и общепринятым. И вот крупнейшая компания даёт перечень тем, которые считает необходимыми для понимания. На самом деле этот список можно оспорить, каких-то тем не хватает, какие-то темы можно выкинуть, но в целом указаны почти все важные темы для уровня младшего специалиста. Что даёт вам сертификация? Понимание, в каком направлении двигаться. Экзамен лишь доказательство того, что вы этот путь прошли. Но вам не обязательно кому-то это доказывать.
+Экзамен стоит немало денег, несколько сотен долларов. Некоторые компании оплачивают экзамены за сотрудников, поэтому мой совет - если у вас нет работы, не нужно тратиться на сам экзамен. Экзамен даст вам бумажку, возможно, это чуть улучшит ваше резюме, но это далеко не решающий фактор и адекватный работодатель будет оценивать по уровню знаний, а не по бумажкам. А вот если вы работаете, если компания готова оплатить вам экзамен - то да, стоит его сдать. Вам это обойдётся бесплатно, а ваш работодатель может чуть поднять вам зарплату, ну или по крайней мере ваше CV станет чуточку лучше.</p>
+</div></blockquote>
+<p>Другой вопрос:</p>
+<p><img alt="" src="../../_images/audience.png"/></p>
+<blockquote>
+<div><blockquote>
+<div><p>Для кого предназначена сертификация, кому стоит идти и сдавать экзамен?</p>
+</div></blockquote>
+<p>В идеале - для младших линукс администраторов, которые отработали год, набрались знаний, практики и решили их доказать. А также для тех, кто раньше работал Windows администратором, а потом решил изучить администрирование Linux-ов. В общем, для людей, у которых есть небольшой опыт за плечами.
+Но я нередко вижу, что на экзамен идут люди, которые только хотят устроиться на свою первую работу, мол, сертификат поможет с устройством на работу.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/rhcsa1.png"/></p>
+<blockquote>
+<div><blockquote>
+<div><p>Что из себя представляет экзамен?</p>
+</div></blockquote>
+<p>Экзамен практический, т.е. вам дадут компьютер и задания. Всё будет на английском, поэтому нужно уметь читать и понимать задания. У вас не будет интернета, но будет системная документация, т.е. man будет работать. Какого рода будут задания нельзя разглашать, но все темы есть на сайте. Вы можете выполнять задания любыми способами - хоть через терминал, хоть через графический интерфейс, хоть через веб. По итогу всякие скрипты проверят именно результат. И самое главное - проверка будет после перезагрузки, т.е. ваша система после всего должна запуститься и ваши изменения должны в ней остаться. Экзамен длится 3 часа, но времени хватает впритык. Скажем, если вы уверенно будете делать без всяких затыков все задания, у вас останется максимум минут 30-40. Естественно, не всё будет гладко, поэтому это лишнее время вам пригодится. Максимальный балл - 300, а проходный - 210, т.е. где-то пару заданий вы можете не выполнить, но старайтесь делать всё, мало ли где-то будут ошибки.</p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>Какие советы по экзамену?</p>
+</div></blockquote>
+<p>Во-первых, когда вам дадут задания, прочтите их все и суммируйте для себя. Некоторые задания могут быть связаны с другими и если вы тупо будете делать их по порядку - то в какой-то момент вам придётся всё переделывать, а на это нет времени. Во-вторых, начните с тем, которые могут повлиять на запуск системы. Скажем, работа с дисками и файловыми системами. Если вы всё испортите в начале, будет время всё исправить. Если же вы всё испортите сделав половину заданий, у вас не хватит времени всё восстановить. В-третьих, периодически, раз в пару заданий, перезагружайте систему для проверки и убежайтесь, что есть результат выполненных заданий. Да, это отнимает время, но будет легче понять и сразу исправить ошибку. Ну и самое главное - не нервничайте. После экзамена никто вас не побьёт, никто ничего плохого с вами не сделает. Максимум вы потеряете деньги, а это печально. Лучше замените волнения и переживания на печаль по деньгам, так будет проще сконцентрироваться на заданиях и быть более сосредоточенным.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/city1.png"/></p>
+<blockquote>
+<div><blockquote>
+<div><p>Где сдавать экзамен?</p>
+</div></blockquote>
+<p>Сейчас есть 2 варианта сдать - оффлайн и онлайн. Оффлайн проводится у партнёров компании Red Hat в разных городах и разных компаниях, поэтому просто наберите в гугле «RHCSA» и ваш город. Там же можно найти или спросить цены. Обычно перед датами экзамена эти компании также проводят быстрые тренинги по поготовке к экзамену. Обычно это занимает неделю или две на полный рабочий день, т.е. некоторые компании оплачивают сотрудникам подобные курсы. Эти курсы не гарантия, что вы сдадите экзамен, но если у вас есть опыт и знания, курсы помогут вам закрыть пробелы перед экзаменом.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/online.png"/></p>
+<blockquote>
+<div><p>Онлайн экзамен можно заказать на официальном сайте редхата, он выходит дороже, но вы сдаёте его дома. Там есть процедура, что нужно подготовить комнату, загрузочную флешку и прочее. Весь экзамен за вами будут следить с камеры. На мой взгляд, лучше сдавать оффлайн, потому что всякие обрывы в сети и нестабильное соединение могут сильно подпортить вам нервы, а если будете сдавать очно, то за работу всего отвечает компания-организатор. И даже если что-то пойдёт не так, отвечать будет организатор.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/rhcsa.png"/></p>
+<blockquote>
+<div><blockquote>
+<div><p>А как готовиться к экзамену? Твоего курса хватает для сдачи?</p>
+</div></blockquote>
+<p>Да, я изначально поставил себе цель сделать полный курс, которого хватит для сдачи экзамена. Сейчас в нём не хватает практических заданий и лабораторных, но я над этим работаю. По <a class="reference external" href="https://basis.gnulinux.pro/rhcsa">ссылке</a> вы можете увидеть, какие темы экзамена в каких уроках разобраны, но я советую посмотреть весь курс для полного понимания. Если вы посмотрите весь курс, ответите на вопросы, сделаете задания и лабораторные - то этого хватит. Для начинающих я бы посоветовал параллельно смотреть какой-то другой курс, потому что вы где-то можете не так понять, что я имею ввиду, а обрабатывая информацию с нескольких источников вы лучше её усваиваете. В любом случае, вы можете задавать вопросы в телеграмм группе.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/641.png"/></p>
+<p>Но есть пара тем, которые остались в сторонке, это пара простых команд, которые я разберу прямо сейчас. Если вы не смотрели курс, то можете пропустить эту часть.</p>
+<p><img alt="" src="../../_images/shutdown1.png"/></p>
+<p>Как правильно выключать компьютер? Есть пара команд:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shutdown</span> <span class="n">now</span>
+<span class="n">poweroff</span>
+</pre></div>
+</div>
+<p>Может где-то на старых юниксовых системах эти команды делали разные вещи, но в современных системах, по крайней мере там где systemd, они делают одно и тоже и являются просто символическими ссылками на systemctl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">shutdown</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">poweroff</span>
+</pre></div>
+</div>
+<p>Также для выключения можно использовать сам systemctl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">poweroff</span>
+</pre></div>
+</div>
+<p>На самом же деле выполняется команда</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">isolate</span> <span class="n">poweroff</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>Мы с вами и systemd и таргеты проходили, поэтому не буду на этом акцентировать внимание. Ну, в общем, можно использовать любую из команд.</p>
+<p><img alt="" src="../../_images/reboot2.png"/></p>
+<p>Тоже самое касается перезагрузки, есть команда reboot:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reboot</span>
+</pre></div>
+</div>
+<p>которая на самом деле является символической ссылкой на systemctl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span>  <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">reboot</span>
+</pre></div>
+</div>
+<p>Можно дать перезагрузку через systemctl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">reboot</span>
+</pre></div>
+</div>
+<p>А на самом деле выполняется reboot таргет:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">isolate</span> <span class="n">reboot</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/grub2.png"/></p>
+<p>Теперь про загрузку системы в разные таргеты вручную. Тут нужно редактировать grub, мы это умеем. Просто в строке ядра надо прописать опцию systemd.unit с нужным таргетом, например, multi-user:</p>
+<p><code class="docutils literal notranslate"><span class="pre">systemd.unit=multi-user.target</span></code></p>
+<p>Или rescue.target:</p>
+<p><code class="docutils literal notranslate"><span class="pre">systemd.unit=rescue.target</span></code></p>
+<p>После чего надо нажать Ctrl+X. Система так загрузится только раз, а после перезагрузки будет как раньше. Как менять таргет навсегда мы разбирали в 34 теме.</p>
+<p><img alt="" src="../../_images/star.png"/></p>
+<p>Ну и последнее - утилита star. Это такой же архиватор, как tar, только чуть быстрее и есть дополнительный функционал. Для начала установим её:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="n">star</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/star1.png"/></p>
+<p>Синтаксис похож на тот же tar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">star</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">f</span> <span class="n">arch</span><span class="o">.</span><span class="n">star</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">group</span>
+<span class="n">star</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">f</span> <span class="n">arch</span><span class="o">.</span><span class="n">star</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">group</span>
+</pre></div>
+</div>
+<p>разве что ключи слитно не работают:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">star</span> <span class="o">-</span><span class="n">cf</span> <span class="n">arch</span><span class="o">.</span><span class="n">star</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">group</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/star2.png"/></p>
+<p>Насколько я понимаю, раньше tar не мог работать с selinux, т.е. при архивации не сохранялся контекст файлов. Этот функционал был в star и поэтому Red Hat требовали знания этой утилиты. Но, честно говоря, синтаксис для сохранения контекста довольно мудрёный:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">star</span> <span class="o">-</span><span class="n">xattr</span> <span class="o">-</span><span class="n">H</span><span class="o">=</span><span class="n">exustar</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">f</span> <span class="n">arch2</span><span class="o">.</span><span class="n">star</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+</div>
+<p>Сейчас же tar также поддерживает сохранение контекста и в нём это сделано попроще, просто добавляем опцию –selinux при архивации и разархивации:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">--</span><span class="n">selinux</span> <span class="o">-</span><span class="n">cf</span> <span class="n">arch3</span><span class="o">.</span><span class="n">tar</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+</div>
+<p>Ну и больше примеров использования star вы можете найти в документации:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">star</span>
+</pre></div>
+</div>
+<p>Я не буду вдаваться в подробности этой утилиты, потому что она довольно специфична и я ни разу не встречал практического применения. Просто показал, потому что она прописана в темах экзамена.</p>
+<p>Если вы собираетесь сдавать экзамен - удачи вам! Будет интересно послушать комментарии тех, кто уже сдал, да и в целом любые комментарии. Пишите, что думаете о курсе, что вам нравится, что не нравится, вопросы и советы другим. На этом тему подготовки к сертификации можно считать закрытой.</p>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+<script src="/_static/js/modern_search.js"></script><script src="/_static/js/navigation_improvements.js?v=1764322075"></script></body>
+<link href="/_static/css/modern_search.css" rel="stylesheet" type="text/css"/><link href="/_static/css/navigation_improvements.css?v=1764322075" rel="stylesheet" type="text/css"/></head></html>
