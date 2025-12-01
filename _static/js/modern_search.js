@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
     async function loadIndex() {
         if (isIndexLoaded) return;
         try {
-            const response = await fetch('/search_index.json');
+            const contentRoot = document.documentElement.dataset.content_root || './';
+            const response = await fetch(contentRoot + 'search_index.json');
             searchIndex = await response.json();
             isIndexLoaded = true;
             console.log('Search index loaded:', searchIndex.length, 'pages');
