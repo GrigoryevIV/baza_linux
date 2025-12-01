@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
             noResults.textContent = 'Ничего не найдено';
             resultsContainer.appendChild(noResults);
         } else {
+            // Sort results by lesson number
+            results.sort((a, b) => {
+                const getNum = (str) => {
+                    const match = str.match(/^(\d+)\./);
+                    return match ? parseInt(match[1], 10) : 9999;
+                };
+                return getNum(a.title) - getNum(b.title);
+            });
+
             // Helper to highlight text in dropdown
             const highlightText = (text, term) => {
                 if (!term) return text;
@@ -70,7 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 item.className = 'search-result-item';
                 // Add highlight param to URL
                 const separator = page.link.includes('?') ? '&' : '?';
-                item.href = `${page.link}${separator}highlight=${encodeURIComponent(query)}`;
+                const contentRoot = document.documentElement.dataset.content_root || './';
+                const relativeLink = page.link.startsWith('/') ? page.link.substring(1) : page.link;
+                item.href = `${contentRoot}${relativeLink}${separator}highlight=${encodeURIComponent(query)}`;
 
                 const title = document.createElement('div');
                 title.className = 'search-result-title';
